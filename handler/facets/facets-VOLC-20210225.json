@@ -1,0 +1,172 @@
+[
+    {
+     "name": "Volcano Observations",
+     "children": [
+      {
+       "name": "Seismic data",
+       "children": [
+        {
+         "name": "Waveforms",
+         "children": [
+          {
+           "name": "Velocity",
+           "ddss": "WP11-DDSS-001"
+          },
+          {
+           "name": "Acceleration",
+           "ddss": "WP11-DDSS-002"
+          }
+         ]
+        },
+        {
+          "name": "Mt.Etna Earthquake Parameters (2000-2019)",
+          "ddss": "WP11-DDSS-027"
+        }
+       ]
+      },
+      {
+       "name": "Geodetic data",
+       "children": [
+        {
+         "name": "RINEX data (15 sec)",
+         "ddss": "WP11-DDSS-003"
+        },
+        {
+         "name": "Tiltmeter",
+         "ddss": "WP11-DDSS-005"
+        },
+        {
+         "name": "Tide gauge",
+         "ddss": "WP11-DDSS-006"
+        },
+        {
+         "name": "Station information - GNSS",
+         "ddss": "WP11-DDSS-067"
+        }
+       ]
+      },
+      {
+       "name": "Geochemical data",
+       "children": [
+        {
+         "name": "Chemical analysis and physical properties of gas, water and rocks",
+         "ddss": "WP11-DDSS-036"
+        },
+        {
+         "name": "Soil CO2 fluxes",
+         "ddss": "WP11-DDSS-041"
+        }
+       ]
+      },
+      {
+       "name": "Satellite data",
+       "children": [
+        {
+         "name": "Volcanic Plume (ash+SO2)",
+         "ddss": "WP11-DDSS-047"
+        },
+        {
+         "name": "Thermal anomaly (lava flow)",
+         "ddss": "WP11-DDSS-049"
+        },
+        {
+         "name": "Wrapped Differential Interferograms (Phase and Amplitude)",
+         "ddss": "WP11-DDSS-050"
+        },
+        {
+         "name": "InSAR lava flow maps",
+         "ddss": "WP11-DDSS-051"
+        }
+       ]
+      },
+      {
+       "name": "Ground-based remote sensing",
+       "children": [
+        {
+         "name": "Ground-based radar data",
+         "ddss": "WP11-DDSS-022"
+        },
+        {
+         "name": "Ground-based visible and thermal / IR camera",
+         "ddss": "WP11-DDSS-023"
+        },
+        {
+         "name": "Ground-based doppler radar near-source eruptive parameters",
+         "ddss": "WP11-DDSS-024"
+        },
+        {
+         "name": "Ground-based UV scanner spectra",
+         "ddss": "WP11-DDSS-025"
+        },
+        {
+         "name": "Ground-based Doppler radar spectra",
+         "ddss": "WP11-DDSS-053"
+        }
+       ]
+      },
+      {
+       "name": "Volcanological/petrological data",
+       "children": [
+        {
+         "name": "Reports on volcanic activity",
+         "ddss": "WP11-DDSS-031"
+        },
+        {
+         "name": "Aviation colour codes for volcanoes",
+         "ddss": "WP11-DDSS-032"
+        },
+        {
+         "name": "Catalogue of eruptions",
+         "ddss": "WP11-DDSS-033"
+        },
+        {
+         "name": "Collections of magmatic rocks",
+         "ddss": "WP11-DDSS-026"
+        }
+       ]
+      },
+      {
+       "name": "Geohazards",
+       "children": [
+        {
+         "name": "SO2 concentration probabilistic hazard maps",
+         "ddss": "WP11-DDSS-054"
+        },
+        {
+         "name": "Spatial probability analysis/maps",
+         "ddss": "WP11-DDSS-056"
+        },
+        {
+         "name": "Lava flow invasion hazard maps",
+         "ddss": "WP11-DDSS-057"
+        },
+        {
+         "name": "Tephra fallout hazard maps for explosive volcanoes",
+         "ddss": "WP11-DDSS-058"
+        },
+        {
+         "name": "PDCs hazard maps (EH;GVF; Deception)",
+         "ddss": "WP11-DDSS-059"
+        },
+        {
+         "name": "Probabilistic volcanic hazard assessment (maps)",
+         "ddss": "WP11-DDSS-060"
+        },
+        {
+         "name": "Effects on health and recommendations for response to SO2 from volcanic eruptions",
+         "ddss": "WP11-DDSS-064"
+        },
+        {
+         "name": "Daily ash/gas forecasting maps",
+         "ddss": "WP11-DDSS-065"
+        },
+        {
+         "name": "Software catalogue for petrological to geophysical modelling",
+         "ddss": "WP11-DDSS-070"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+   

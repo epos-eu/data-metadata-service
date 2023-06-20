@@ -1,0 +1,138 @@
+[
+ {
+  "name": "Near Fault Observations",
+  "children": [
+   {
+    "name": "Seismological Data",
+    "children": [
+     {
+      "name": "Waveform data",
+      "children": [
+       {
+        "name": "Vel. Acc. Seismic waveforms Continuous (EIDA - Virtual Network)",
+        "ddss": "WP09-DDSS-001, WP09-DDSS-002"
+       }
+      ]
+     },
+     {
+      "name": "Waveform services",
+      "children": [
+       {
+        "name": "Seismic Station Information",
+        "children": [
+         {
+          "name": "Seismic Station Information (EIDA - Virtual Network)",
+          "ddss": "WP09-DDSS-001b"
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Seismological products",
+      "children": [
+       {
+        "name": "Earthquakes data",
+        "children": [
+         {
+          "name": "Earthquakes parameters",
+          "ddss": "WP09-DDSS-006"
+         }
+        ]
+       },
+       {
+        "name": "Vp/Vs - velocity ratio",
+        "children": [
+         {
+          "name": "Vrancea, TABOO, IRPINIA Vp/Vs",
+          "ddss": "WP09-DDSS-009"
+         }
+        ]
+       },
+       {
+        "name": "Historical Earthquakes Catalogue",
+        "children": [
+         {
+          "name": "Historical EQ Catalogue",
+          "ddss": "WP09-DDSS-029"
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Geochemical Data",
+    "children": [
+     {
+      "name": "Radon",
+      "children": [
+       {
+        "name": "Radon Decay Counts",
+        "ddss": "WP09-DDSS-024"
+       },
+       {
+        "name": "TABOO Radon Stations",
+        "ddss": "WP09-DDSS-024b"
+       }
+      ]
+     },
+     {
+      "name": "Meteo Parameters",
+      "children": [
+       {
+        "name": "Meteo parameters; TABOO Meteo at CO2 site",
+        "ddss": "WP09-DDSS-025"
+       }
+      ]
+     },
+     {
+      "name": "Carbon Dioxide",
+      "children": [
+       {
+        "name": "CO2 soil flux; TABOO CO2 soil dynamic concentration",
+        "ddss": "WP09-DDSS-028"
+       },
+       {
+        "name": "Carbon Dioxide Station Information",
+        "ddss": "WP09-DDSS-028b"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Geophysical Data",
+    "children": [
+     {
+      "name": "Strainmeter",
+      "children": [
+       {
+        "name": "Strainmeter (water level, pressure)",
+        "ddss": "WP09-DDSS-035"
+       },
+       {
+        "name": "CRL Strainmeter Station Information",
+        "ddss": "WP09-DDSS-035b"
+       }
+      ]
+     },
+     {
+      "name": "Infrasound",
+      "children": [
+       {
+        "name": "Infrasound waveforms",
+        "ddss": "WP09-DDSS-004"
+       },
+       {
+        "name": "Vrancea Infrasound Station Information",
+        "ddss": "WP09-DDSS-004b"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

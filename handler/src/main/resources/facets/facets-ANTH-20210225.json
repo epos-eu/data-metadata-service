@@ -1,0 +1,220 @@
+[
+ {
+  "name": "Anthropogenic Hazard Observations",
+  "children": [
+   {
+    "name": "Services",
+    "children": [
+     {
+      "name": "Virtual access to IS-EPOS Platform",
+      "ddss": "WP14-DDSS-001"
+     }
+    ]
+   },
+   {
+    "name": "Episodes",
+    "children": [
+     {
+      "name": "Reservoir impoundment",
+      "children": [
+       {
+        "name": "CZORSZTYN",
+        "ddss": "WP14-DDSS-002"
+       },
+       {
+        "name": "SONG TRANH",
+        "ddss": "WP14-DDSS-005"
+       },
+       {
+        "name": "MONTEYNARD",
+        "ddss": "WP14-DDSS-011"
+       },
+       {
+        "name": "VAL D'AGRI WATER RESERVOIR",
+        "ddss": "WP14-DDSS-020"
+       },
+       {
+        "name": "VOUGLANS",
+        "ddss": "WP14-DDSS-043"
+       },
+       {
+        "name": "LAI CHAU",
+        "ddss": "WP14-DDSS-033"
+       }
+      ]
+     },
+     {
+      "name": "Geothermal energy production",
+      "children": [
+       {
+        "name": "GROSS SCHOENEBECK",
+        "ddss": "WP14-DDSS-003"
+       },
+       {
+        "name": "SOULTZ-SOUS-FORETS 1993",
+        "ddss": "WP14-DDSS-012"
+       },
+       {
+        "name": "SOULTZ-SOUS-FORETS 2000",
+        "ddss": "WP14-DDSS-013"
+       },
+       {
+        "name": "SOULTZ-SOUS-FORETS 2003",
+        "ddss": "WP14-DDSS-014"
+       },
+       {
+        "name": "The Geysers Prati-9/29 cluster",
+        "ddss": "WP14-DDSS-017"
+       },
+       {
+        "name": "THE GEYSERS",
+        "ddss": "WP14-DDSS-018"
+       },
+       {
+        "name": "CORNWALL",
+        "ddss": "WP14-DDSS-040"
+       },
+       {
+        "name": "ST. GALLEN",
+        "ddss": "WP14-DDSS-039"
+       },
+       {
+        "name": "SOULTZ-SOUS-FORETS 2004",
+        "ddss": "WP14-DDSS-046"
+       },
+       {
+        "name": "SOULTZ-SOUS-FORETS 2005",
+        "ddss": "WP14-DDSS-047"
+       },
+       {
+        "name": "COOPER BASIN",
+        "ddss": "WP14-DDSS-048"
+       }
+      ]
+     },
+     {
+      "name": "Underground mining",
+      "children": [
+       {
+        "name": "LGCD",
+        "ddss": "WP14-DDSS-004"
+       },
+       {
+        "name": "USCB",
+        "ddss": "WP14-DDSS-006"
+       },
+       {
+        "name": "BOBREK MINE",
+        "ddss": "WP14-DDSS-007"
+       },
+       {
+        "name": "PYHASALMI MINE",
+        "ddss": "WP14-DDSS-009"
+       },
+       {
+        "name": "GISOS-CERVILLE",
+        "ddss": "WP14-DDSS-015"
+       },
+       {
+        "name": "THORESBY COLIERY",
+        "ddss": "WP14-DDSS-023"
+       },
+       {
+        "name": "ASFORDBY MINE",
+        "ddss": "WP14-DDSS-024"
+       },
+       {
+        "name": "NORTHWICH",
+        "ddss": "WP14-DDSS-025"
+       },
+       {
+        "name": "PREESALL MINE",
+        "ddss": "WP14-DDSS-028"
+       },
+       {
+        "name": "BOGDANKA",
+        "ddss": "WP14-DDSS-045"
+       }
+      ]
+     },
+     {
+      "name": "Conventional hydrocarbon extraction",
+      "children": [
+       {
+        "name": "LACQ GAS FIELD",
+        "ddss": "WP14-DDSS-010"
+       },
+       {
+        "name": "VAL D'AGRI OIL FIELD",
+        "ddss": "WP14-DDSS-019"
+       },
+       {
+        "name": "EMILIA REGION",
+        "ddss": "WP14-DDSS-021"
+       },
+       {
+        "name": "OKLAHOMA",
+        "ddss": "WP14-DDSS-027"
+       },
+       {
+        "name": "GRONINGEN FIELD",
+        "ddss": "WP14-DDSS-029"
+       },
+       {
+        "name": "GAZLI",
+        "ddss": "WP14-DDSS-044"
+       }
+      ]
+     },
+     {
+      "name": "Underground gas storage",
+      "children": [
+       {
+        "name": "STARFISH",
+        "ddss": "WP14-DDSS-016"
+       }
+      ]
+     },
+     {
+      "name": "Wastewater injection",
+      "children": [
+       {
+        "name": "VAL D'AGRI OIL FIELD",
+        "ddss": "WP14-DDSS-019"
+       },
+       {
+        "name": "OKLAHOMA",
+        "ddss": "WP14-DDSS-027"
+       }
+      ]
+     },
+     {
+      "name": "Unconventional hydrocarbon extraction",
+      "children": [
+       {
+        "name": "PREESE HALL",
+        "ddss": "WP14-DDSS-022"
+       },
+       {
+        "name": "OKLAHOMA",
+        "ddss": "WP14-DDSS-027"
+       },
+       {
+        "name": "LUBOCINO",
+        "ddss": "WP14-DDSS-036"
+       },
+       {
+        "name": "WYSIN",
+        "ddss": "WP14-DDSS-037"
+       },
+       {
+        "name": "COTTON VALLEY",
+        "ddss": "WP14-DDSS-042"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

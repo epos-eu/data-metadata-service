@@ -1,0 +1,78 @@
+[
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "name": "Property data of analogue modelling materials",
+                        "ddss": "WP16-DDSS-003"
+                    },
+                    {
+                        "name": "Analogue modelling results",
+                        "ddss": "WP16-DDSS-004"
+                    }
+                ],
+                "name": "Analogue modelling of geologic processes"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Analytical and experimental data on rock properties",
+                        "ddss": "WP16-DDSS-002"
+                    }
+                ],
+                "name": "Rock and melt physics"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Paleomagnetic data",
+                        "ddss": "WP16-DDSS-006"
+                    },
+                    {
+                        "name": "Magnetic susceptibility data",
+                        "ddss": "WP16-DDSS-007"
+                    }
+                ],
+                "name": "Paleomagnetism"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Analytical and experimental data on rock properties",
+                        "ddss": "WP16-DDSS-001"
+                    }
+                ],
+                "name": "Geochemistry"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Microscopy and tomography data",
+                        "ddss": "WP16-DDSS-011"
+                    }
+                ],
+                "name": "Microscopy and tomography"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Geo-energy data",
+                        "ddss": "WP16-DDSS-012"
+                    }
+                ],
+                "name": "Geo-energy"
+            },
+            {
+                "children": [
+                    {
+                        "name": "Experimental lab data",
+                        "ddss": "WP16-DDSS-013"
+                    }
+                ],
+                "name": "Cross-discipline laboratory data"
+            }
+        ],
+        "name": "Multi-scale Laboratory Data"
+    }
+]

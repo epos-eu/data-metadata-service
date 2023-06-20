@@ -1,0 +1,111 @@
+[
+ {
+  "name": "Geology",
+  "children": [
+   {
+    "name": "Boreholes",
+    "children": [
+     {
+      "name": "Borehole data index",
+      "ddss": "WP15-DDSS-001a"
+     },
+     {
+      "name": "Boreholes detailed data (depth, contractor, equipment, ...)",
+      "ddss": "WP15-DDSS-001b"
+     },
+     {
+      "name": "Boreholes Geophysical logs",
+      "ddss": "WP15-DDSS-001c"
+     },
+     {
+      "name": "Boreholes geological Description",
+      "ddss": "WP15-DDSS-001d"
+     },
+     {
+      "name": "Boreholes Groundwater level",
+      "ddss": "WP15-DDSS-001e"
+     },
+     {
+      "name": "Boreholes Rock Geochemistry",
+      "ddss": "WP15-DDSS-001f"
+     },
+     {
+      "name": "Boreholes Pore Gas Chemistry",
+      "ddss": "WP15-DDSS-001g"
+     },
+     {
+      "name": "Boreholes Geotechnical Information",
+      "ddss": "WP15-DDSS-001h"
+     },
+     {
+      "name": "Borehole Data Index Discovery Service",
+      "ddss": "WP15-DDSS-001i"
+     },
+     {
+      "name": "Borehole Data Index View Service",
+      "ddss": "WP15-DDSS-001j"
+     },
+     {
+      "name": "Borehole rock sample analysis",
+      "ddss": "WP15-DDSS-003"
+     }
+    ]
+   },
+   {
+    "name": "Geological Maps",
+    "children": [
+     {
+      "name": "Geological Map 1:1,000,000 (OneGeology-Europe layer) service",
+      "ddss": "WP15-DDSS-002a"
+     },
+     {
+      "name": "Geological Map 1:500,000-250,000 (stratigraphic, lithological, faults, bedrock, superficial)",
+      "ddss": "WP15-DDSS-002c"
+     },
+     {
+      "name": "Geological Map 1:100,000-50,000 (stratigraphic, lithological, faults, bedrock, superficial)",
+      "ddss": "WP15-DDSS-002d"
+     },
+     {
+      "name": "GeologicalFeature Index",
+      "ddss": "WP15-DDSS-002b"
+     },
+     {
+      "name": "GeologicalFeature Index Discovery Service",
+      "ddss": "WP15-DDSS-002e"
+     }
+    ]
+   },
+   {
+    "name": "3D/4D Models",
+    "children": [
+     {
+      "name": "3D/4D Model Feature Service",
+      "ddss": "WP15-DDSS-005q"
+     },
+     {
+      "name": "3D/4D Model Index Discovery Service",
+      "ddss": "WP15-DDSS-006a"
+     },
+     {
+      "name": "3D/4D Model Index",
+      "ddss": "WP15-DDSS-006b"
+     },
+     {
+      "name": "3D/4D Model Index View Service",
+      "ddss": "WP15-DDSS-006c"
+     }
+    ]
+   },
+   {
+    "name": "Mineral resources",
+    "children": [
+     {
+      "name": "Georesources",
+      "ddss": "WP15-DDSS-010a"
+     }
+    ]
+   }
+  ]
+ }
+]

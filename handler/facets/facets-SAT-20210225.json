@@ -1,0 +1,76 @@
+[
+ {
+  "name": "Satellite Observations",
+  "children": [
+   {
+    "name": "InSAR",
+    "children": [
+     {
+      "name": "Wrapped Differential Interferogram (Phase and Amplitude)",
+      "ddss": "WP12-DDSS-001"
+     },
+     {
+      "name": "Spatial coherence",
+      "ddss": "WP12-DDSS-002"
+     },
+     {
+      "name": "Unwrapped Differential Interferogram (Phase and Amplitude)",
+      "ddss": "WP12-DDSS-003"
+     },
+     {
+      "name": "Map of LOS vector (NEU coefficient)",
+      "ddss": "WP12-DDSS-004"
+     },
+     {
+      "name": "Interferogram Atmospheric Phase Screen",
+      "ddss": "WP12-DDSS-005"
+     },
+     {
+      "name": "DEM in radar geometry",
+      "ddss": "WP12-DDSS-006"
+     },
+     {
+      "name": "Lookup table from radar coordinates to ground coordinates",
+      "ddss": "WP12-DDSS-007"
+     },
+     {
+      "name": "LOS Displacement Time Series",
+      "ddss": "WP12-DDSS-008, WP12-DDSS-009,WP12-DDSS-011,WP12-DDSS-012"
+     },
+     {
+      "name": "Network misclosure (Quality of times series inversion)",
+      "ddss": "WP12-DDSS-010"
+     },
+     {
+      "name": "Stack of coregistered Interferograms",
+      "ddss": "WP12-DDSS-013"
+     },
+     {
+      "name": "GDM-SAR Sentinel-1 processing on demand",
+      "ddss": "WP12-DDSS-024"
+     },
+     {
+      "name": "GDM-SAR visualization",
+      "ddss": "WP12-DDSS-025"
+     },
+     {
+      "name": "Sentinel-1 SBAS Processing on demand (L1)",
+      "ddss": "WP12-DDSS-027"
+     },
+     {
+      "name": "ERS-ENVISAT SBAS Processing on demand (L1)",
+      "ddss": "WP12-DDSS-028"
+     },
+     {
+      "name": "Systematic Sentinel-1 SBAS Processing",
+      "ddss": "WP12-DDSS-034"
+     },
+     {
+      "name": "Systematic Generation of Interferograms and Displacement Time Series",
+      "ddss": "WP12-DDSS-035"
+     }
+    ]
+   }
+  ]
+ }
+]

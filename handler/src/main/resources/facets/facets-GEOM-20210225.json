@@ -1,0 +1,75 @@
+[
+ {
+  "name": "Geoelectromagnetism",
+  "children": [
+   {
+    "name": "Geomagnetic data",
+    "children": [
+     {
+      "name": "Geomagnetic observatory data (World Data Centre and INTERMAGNET)",
+      "ddss": "WP13-DDSS-001"
+     },
+     {
+      "name": "Geomagnetic variometer data (IMAGE + Baltic extensions)",
+      "ddss": "WP13-DDSS-002"
+     },
+     {
+      "name": "Global geomagnetic survey data",
+      "ddss": "WP13-DDSS-003"
+     }
+    ]
+   },
+   {
+    "name": "Geomagnetic models",
+    "children": [
+     {
+      "name": "Global magnetic models (International Geomagnetic Reference Field and World Magnetic Model)",
+      "ddss": "WP13-DDSS-012"
+     },
+     {
+      "name": "World Digital Magnetic Anomaly Map (WDMAM)",
+      "ddss": "WP13-DDSS-015"
+     }
+    ]
+   },
+   {
+    "name": "Geomagnetic indices and events",
+    "children": [
+     {
+      "name": "Geomagnetic indices (ISGI)",
+      "ddss": "WP13-DDSS-006"
+     },
+     {
+      "name": "Geomagnetic events (OE, ISGI)",
+      "ddss": "WP13-DDSS-007"
+     },
+     {
+      "name": "Geomagnetic electrojet indices (IMAGE)",
+      "ddss": "WP13-DDSS-008"
+     },
+     {
+      "name": "Geomagnetic Substorm events",
+      "ddss": "WP13-DDSS-009"
+     }
+    ]
+   },
+   {
+    "name": "Magnetotelluric models and data",
+    "children": [
+     {
+      "name": "Magnetotelluric time-series",
+      "ddss": "WP13-DDSS-004"
+     },
+     {
+      "name": "Magnetotelluric transfer functions",
+      "ddss": "WP13-DDSS-010"
+     },
+     {
+      "name": "Lithospheric conductivity models",
+      "ddss": "WP13-DDSS-013"
+     }
+    ]
+   }
+  ]
+ }
+]

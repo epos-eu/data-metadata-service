@@ -1,0 +1,229 @@
+[
+    {
+        "name": "Seismology",
+        "children": [
+            {
+                "name": "Waveform and peak-motion services",
+                "children": [
+                    {
+                        "name": "Waveform data",
+                        "children": [
+                            {
+                                "name": "DATASELECT-FEDERATOR; ",
+                                "ddss": "WP08-DDSS-005"
+                            },
+                            {
+                                "name": "Seismic waveforms distributed by EIDA (individual endpoints)",
+                                "children": [
+                                    {
+                                        "name": "Seismic waveforms",
+                                        "ddss": "WP08-DDSS-001"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Waveform metrics",
+                        "children": [
+                            {
+                                "name": "Quality metrics distributed by EIDA (individual endpoints)",
+                                "children": [
+                                    {
+                                        "name": "Data quality; wfcatalog",
+                                        "ddss": "WP08-DDSS-003"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "WFCATALOG-FEDERATOR",
+                                "ddss": "WP08-DDSS-004"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Waveform metadata",
+                        "children": [
+                            {
+                                "name": "STATION-FEDERATOR",
+                                "ddss": "WP08-DDSS-008"
+                            },
+                            {
+                                "name": "Seismic metadata distributed by EIDA (individual endpoints)",
+                                "children": [
+                                    {
+                                        "name": "EIDA Stations",
+                                        "ddss": "WP08-DDSS-002"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Strong motion parameters",
+                        "children": [
+                            {
+                                "name": "Rapid Raw Strong Motion DB",
+                                "ddss": "WP08-DDSS-009"
+                            },
+                            {
+                                "name": "Engineering Strong Motion DB",
+                                "ddss": "WP08-DDSS-010"
+                            },
+                            {
+                                "name": "ESM strong-motion flat-file",
+                                "ddss": "WP08-DDSS-053"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Waveform parameters",
+                        "children": [
+                            {
+                                "name": "USGS Shakemap Input files for the RRSM",
+                                "ddss": "WP08-DDSS-048"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Seismological products services",
+                "children": [
+                    {
+                        "name": "Earthquake parameters",
+                        "children": [
+                            {
+                                "name": "EMSC Events",
+                                "ddss": "WP08-DDSS-017"
+                            },
+                            {
+                                "name": "EMSC Moment Tensors",
+                                "ddss": "WP08-DDSS-019"
+                            },
+                            {
+                                "name": "Historical earthquakes 1000-1899 distribution (FDSN-event)",
+                                "ddss": "WP08-DDSS-024"
+                            },
+                            {
+                                "name": "Historical earthquakes 1000-1899 distribution (OGC WFS)",
+                                "ddss": "WP08-DDSS-025"
+                            },
+                            {
+                                "name": "Historical earthquakes 1000-1899 distribution (OGC WMS)",
+                                "ddss": "WP08-DDSS-050"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Bibliography metadata for historical earthquakes",
+                        "ddss": "WP08-DDSS-026"
+                    },
+                    {
+                        "name": "Macroseismic data",
+                        "children": [
+                            {
+                                "name": "Felt reports of earthquake eyewitnesses collected in real-time at the European-Mediterranean Seismological Centre",
+                                "ddss": "WP08-DDSS-022"
+                            },
+                            {
+                                "name": "Macroseismic intensity data 1000-1899",
+                                "ddss": "WP08-DDSS-051"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Earthquake source data",
+                        "children": [
+                            {
+                                "name": "Rupture models (EMSC)",
+                                "ddss": "WP08-DDSS-021"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Flinn-Engdahl region lookup",
+                        "ddss": "WP08-DDSS-018"
+                    },
+                    {
+                        "name": "UNID",
+                        "ddss": "WP08-DDSS-020"
+                    }
+                ]
+            },
+            {
+                "name": "Earthquake hazard and risk services",
+                "children": [
+                    {
+                        "name": "Risk products",
+                        "children": [
+                            {
+                                "name": "Risk Maps",
+                                "ddss": "WP08-DDSS-043"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Seismogenic faults",
+                        "children": [
+                            {
+                                "name": "European Database of Seismogenic Faults (EDSF)",
+                                "ddss": "WP08-DDSS-038"
+                            },
+                            {
+                                "name": "Seismogenic faults added",
+                                "ddss": "WP08-DDSS-054"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Hazard Model Access (EFEHR)",
+                        "ddss": "WP08-DDSS-028"
+                    },
+                    {
+                        "name": "Hazard products",
+                        "children": [
+                            {
+                                "name": "Hazard curve discovery & data access",
+                                "ddss": "WP08-DDSS-037"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Earthquake Catalogue",
+                        "ddss": "WP08-DDSS-034"
+                    },
+                    {
+                        "name": "Earthquake rate forecasting models",
+                        "ddss": "WP08-DDSS-035"
+                    },
+                    {
+                        "name": "Strain rate models",
+                        "ddss": "WP08-DDSS-036"
+                    },
+                    {
+                        "name": "GMPE Database",
+                        "ddss": "WP08-DDSS-039"
+                    },
+                    {
+                        "name": "European Geotechnical Database (EGD)",
+                        "ddss": "WP08-DDSS-040"
+                    },
+                    {
+                        "name": "Building-Strong-Motion-records database",
+                        "ddss": "WP08-DDSS-041"
+                    },
+                    {
+                        "name": "Exposure models",
+                        "children": [
+                            {
+                                "name": "Exposure model maps",
+                                "ddss": "WP08-DDSS-042"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
