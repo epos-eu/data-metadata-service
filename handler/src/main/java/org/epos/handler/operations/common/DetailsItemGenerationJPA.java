@@ -1,6 +1,9 @@
 package org.epos.handler.operations.common;
 
 import com.google.gson.JsonObject;
+
+import org.epos.eposdatamodel.ContactPoint;
+import org.epos.eposdatamodel.LinkedEntity;
 import org.epos.eposdatamodel.State;
 import org.epos.handler.HeaderParser;
 import org.epos.handler.beans.DataServiceProvider;
@@ -8,6 +11,7 @@ import org.epos.handler.beans.ServiceParameter;
 import org.epos.handler.beans.SpatialInformation;
 import org.epos.handler.beans.TemporalCoverage;
 import org.epos.handler.constants.EnvironmentVariables;
+import org.epos.handler.dbapi.dbapiimplementation.ContactPointDBAPI;
 import org.epos.handler.dbapi.model.*;
 import org.epos.handler.dbapi.service.DBService;
 import org.epos.handler.enums.DataOriginType;
@@ -33,6 +37,7 @@ public class DetailsItemGenerationJPA {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetailsItemGenerationJPA.class);
 
     private static final String API_PATH_DETAILS = EnvironmentVariables.API_CONTEXT + "/resources/details?id=";
+    private static final String EMAIL_SENDER = EnvironmentVariables.API_CONTEXT + "/sender/send-email?id=";
 
     public static JsonObject generate(JsonObject response, JsonObject parameters, HeaderParser header) {
 
@@ -143,6 +148,10 @@ public class DetailsItemGenerationJPA {
                 if (ddss != null) internalIDs.add(ddss);
             }
         });
+      
+        if(!dp.getContactpointDataproductsByInstanceId().isEmpty()) {
+        	distribution.setDataprovidersEmailhref(EnvironmentVariables.API_HOST + API_PATH_DETAILS + String.join(",",dp.getContactpointDataproductsByInstanceId().stream().map(EDMContactpointDataproduct::getInstanceContactpointId).toList()));
+        }
 
 
         distribution.setFrequencyUpdate(Optional.ofNullable(dp.getAccrualperiodicity()).orElse(null));
@@ -247,6 +256,11 @@ public class DetailsItemGenerationJPA {
                         .map(EDMWebserviceCategory::getCategoryByCategoryId)
                         .map(EDMCategory::getUid).collect(Collectors.toList())).orElse(null));
             }
+            
+            if(!ws.getContactpointWebservicesByInstanceId().isEmpty()) {
+            	distribution.setServiceprovidersEmailhref(EnvironmentVariables.API_HOST + EMAIL_SENDER + String.join(",",ws.getContactpointWebservicesByInstanceId().stream().map(EDMContactpointWebservice::getInstanceContactpointId).toList()));
+            }
+
         }
 
         distribution.setParameters(new ArrayList<>());
@@ -321,7 +335,7 @@ public class DetailsItemGenerationJPA {
         }
 
         distribution.setAvailableFormats(AvailableFormatsGeneration.generate(distributionSelected));
-
+        
         em.close();
 
         return gson.toJsonTree(distribution).getAsJsonObject();
