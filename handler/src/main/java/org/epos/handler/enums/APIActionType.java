@@ -11,6 +11,7 @@ public enum APIActionType {
 	DETAILS("details"),
 	MONITORING("monitoring"),
 	PLUGINS("plugins"),
+	SENDEMAIL("send-email"),
 	VALIDATIONS("validations"),
 	CONTACTPOINT("contactpoints"),
 	DATAPRODUCT("dataproducts"),

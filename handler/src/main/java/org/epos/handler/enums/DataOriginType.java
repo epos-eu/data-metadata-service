@@ -13,6 +13,7 @@ public enum DataOriginType {
 	CONVERTER("converter-service"),
 	EXTERNALACCESS("external-access-service"),
 	BACKOFFICE("backoffice"),
+	SENDER("sender"),
 	PLUGINS("converter-plugins"); // TEMPORARY
 
 	private String value;

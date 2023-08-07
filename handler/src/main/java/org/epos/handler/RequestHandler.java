@@ -11,6 +11,7 @@ import org.epos.handler.operations.converter.ConverterGet;
 import org.epos.handler.operations.externalaccess.ExternalAccessGet;
 import org.epos.handler.operations.ingestor.IngestorPost;
 import org.epos.handler.operations.resources.ResourcesGet;
+import org.epos.handler.operations.sender.SenderGet;
 import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
@@ -63,6 +64,8 @@ public class RequestHandler extends PlainTextRelayRouterHandler {
 		LOGGER.info("Received request from endpoint: "+ headers);
 
 		HeaderParser headerParser = new HeaderParser(new HeaderParserBuilder(headers));
+		
+		System.out.println(headerParser.toString());
 
 		JsonObject response = new JsonObject();
 
@@ -97,6 +100,8 @@ public class RequestHandler extends PlainTextRelayRouterHandler {
 			switch(headerParser.getOrigin()) {
 			case INGESTOR:
 				return new IngestorPost().operationAction(headerParser, headers, payload, response);
+			case SENDER:
+				return new SenderGet().operationAction(headerParser, headers, payload, response);
 			default:
 				break;
 			}

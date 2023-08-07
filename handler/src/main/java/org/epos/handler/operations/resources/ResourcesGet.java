@@ -11,6 +11,7 @@ import org.epos.handler.enums.RequestDomainType;
 import org.epos.handler.interfaces.Operation;
 import org.epos.handler.operations.common.*;
 import org.epos.handler.operations.monitoring.MonitoringGeneration;
+import org.epos.handler.operations.sender.ContactPointGet;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
