@@ -150,7 +150,7 @@ public class DetailsItemGenerationJPA {
         });
       
         if(!dp.getContactpointDataproductsByInstanceId().isEmpty()) {
-        	distribution.setDataprovidersEmailhref(EnvironmentVariables.API_HOST + API_PATH_DETAILS + String.join(",",dp.getContactpointDataproductsByInstanceId().stream().map(EDMContactpointDataproduct::getInstanceContactpointId).toList()));
+        	distribution.setDataprovidersEmailhref(EnvironmentVariables.API_HOST + API_PATH_DETAILS + String.join(",",dp.getContactpointDataproductsByInstanceId().stream().map(EDMContactpointDataproduct::getInstanceContactpointId).collect(Collectors.toList())));
         }
 
 
@@ -258,7 +258,7 @@ public class DetailsItemGenerationJPA {
             }
             
             if(!ws.getContactpointWebservicesByInstanceId().isEmpty()) {
-            	distribution.setServiceprovidersEmailhref(EnvironmentVariables.API_HOST + EMAIL_SENDER + String.join(",",ws.getContactpointWebservicesByInstanceId().stream().map(EDMContactpointWebservice::getInstanceContactpointId).toList()));
+            	distribution.setServiceprovidersEmailhref(EnvironmentVariables.API_HOST + EMAIL_SENDER + String.join(",",ws.getContactpointWebservicesByInstanceId().stream().map(EDMContactpointWebservice::getInstanceContactpointId).collect(Collectors.toList())));
             }
 
         }
