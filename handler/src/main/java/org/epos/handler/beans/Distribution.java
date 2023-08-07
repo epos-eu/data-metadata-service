@@ -34,7 +34,7 @@ public class Distribution implements Serializable {
 	private List<String> scienceDomain;
 	private String hasQualityAnnotation;
 	private List<AvailableFormat> availableFormats;
-	private String dataproviderContacts;
+	private List<AvailableContactPoints> availableContactPoints;
 	
 	// WEBSERVICE
 	
@@ -47,7 +47,6 @@ public class Distribution implements Serializable {
 	private String serviceDocumentation;
 	private List<String> serviceType;
 	private String endpoint;
-	private String serviceproviderContacts;
 
 	private List<ServiceParameter> serviceParameters;
 	
@@ -57,6 +56,7 @@ public class Distribution implements Serializable {
 		internalID = new ArrayList<>();
 		DOI = new ArrayList<>();
 		availableFormats = new ArrayList<>();
+		availableContactPoints = new ArrayList<>();
 		serviceSpatial = new SpatialInfo();
 		spatial = new SpatialInfo();
 		temporalCoverage = new TemporalCoverage();
@@ -249,6 +249,14 @@ public class Distribution implements Serializable {
 		this.availableFormats = availableFormats;
 	}
 
+	public List<AvailableContactPoints> getAvailableContactPoints() {
+		return availableContactPoints;
+	}
+
+	public void setAvailableContactPoints(List<AvailableContactPoints> availableContactPoints) {
+		this.availableContactPoints = availableContactPoints;
+	}
+
 	public String getServiceName() {
 		return serviceName;
 	}
@@ -352,22 +360,6 @@ public class Distribution implements Serializable {
 
 	public void setHasQualityAnnotation(String hasQualityAnnotation) {
 		this.hasQualityAnnotation = hasQualityAnnotation;
-	}
-
-	public String getDataprovidersEmailhref() {
-		return dataproviderContacts;
-	}
-
-	public void setDataprovidersEmailhref(String dataprovidersEmailhref) {
-		this.dataproviderContacts = dataprovidersEmailhref;
-	}
-
-	public String getServiceprovidersEmailhref() {
-		return serviceproviderContacts;
-	}
-
-	public void setServiceprovidersEmailhref(String serviceprovidersEmailhref) {
-		this.serviceproviderContacts = serviceprovidersEmailhref;
 	}
 
 	@Override
