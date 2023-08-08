@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 import org.epos.handler.HeaderParser;
 import org.epos.handler.beans.MonitoringBean;
 import org.epos.handler.constants.EnvironmentVariables;
+import org.epos.handler.dbapi.DBAPIClient;
 import org.epos.handler.dbapi.dbapiimplementation.ContactPointDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.DataProductDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.DistributionDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.OperationDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.PersonDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.SoftwareApplicationDBAPI;
+import org.epos.handler.dbapi.model.EDMWebservice;
 import org.epos.handler.enums.DataOriginType;
 import org.epos.handler.operations.common.DetailsItemGenerationJPA;
 import org.epos.eposdatamodel.*;
@@ -30,8 +32,8 @@ import static org.epos.handler.support.Utils.gson;
 public class MonitoringGeneration {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonitoringGeneration.class); 
-
-	private static final String API_PATH_MONITORING_EXECUTE  = EnvironmentVariables.API_CONTEXT+"/execute?id=";
+	
+	private static final DBAPIClient dbapi = new DBAPIClient();
 
 	public static JsonArray generate(JsonObject response, JsonObject parameters, HeaderParser header) {
 		
@@ -102,12 +104,14 @@ public class MonitoringGeneration {
 					else if(ddss.toLowerCase().contains("wp16")) mb.setTCSGroup("Multi-Scale Laboratory");
 					else if(ddss.toLowerCase().contains("wp18")) mb.setTCSGroup("Tsunami");
 					else mb.setTCSGroup("Undefined");
+					
 
-					if(d.getContactPoint()!=null) {
-						for(String cp : d.getContactPoint().stream().map(LinkedEntity::getUid).collect(Collectors.toList())) {
-							for(ContactPoint p : contactList) {
-								if(cp.contains(p.getUid())) mb.createContacts(p.getUid(),p.getRole(), p.getEmail());
-							}
+					if(dx.getAccessService()!=null) {
+						for(WebService ws : dbapi.retrieve(WebService.class, new DBAPIClient.GetQuery().instanceId(dx.getAccessService().getInstanceId()))) {
+							for(LinkedEntity le : ws.getContactPoint()) {
+								dbapi.retrieve(ContactPoint.class, new DBAPIClient.GetQuery().instanceId(le.getInstanceId()))
+								.forEach(contact->  mb.createContacts(contact.getUid(),contact.getRole(), contact.getEmail()));
+							}	
 						}
 					}
 				}
