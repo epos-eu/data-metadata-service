@@ -289,7 +289,7 @@ public class SearchGenerationJPA {
 		JsonArray scienceDomainArray = new JsonArray();
 		scienceDomains.forEach(r -> {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("name",r.getUid().replace("epos:", ""));
+			jsonObject.addProperty("name",r.getName());
 			jsonObject.addProperty("id", r.getId());
 			scienceDomainArray.add(jsonObject);
 		});
@@ -302,7 +302,7 @@ public class SearchGenerationJPA {
 		JsonArray serviceTypeArray = new JsonArray();
 		serviceTypes.forEach(r -> {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("name",r.getUid().replace("epos:", ""));
+			jsonObject.addProperty("name",r.getName());
 			jsonObject.addProperty("id", r.getId());
 			serviceTypeArray.add(jsonObject);
 		});

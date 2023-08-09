@@ -199,7 +199,7 @@ public class DetailsItemGenerationJPA {
 		if (dp.getDataproductCategoriesByInstanceId() != null) {
 			distribution.setScienceDomain(Optional.of(dp.getDataproductCategoriesByInstanceId().stream()
 					.map(EDMDataproductCategory::getCategoryByCategoryId)
-					.map(EDMCategory::getUid).collect(Collectors.toList())).orElse(null));
+					.map(EDMCategory::getName).collect(Collectors.toList())).orElse(null));
 		}
 
 		distribution.setHasQualityAnnotation(Optional.ofNullable(dp.getHasQualityAnnotation()).orElse(null));
@@ -253,7 +253,7 @@ public class DetailsItemGenerationJPA {
 			if (ws.getWebserviceCategoriesByInstanceId() != null) {
 				distribution.setServiceType(Optional.of(ws.getWebserviceCategoriesByInstanceId().stream()
 						.map(EDMWebserviceCategory::getCategoryByCategoryId)
-						.map(EDMCategory::getUid).collect(Collectors.toList())).orElse(null));
+						.map(EDMCategory::getName).collect(Collectors.toList())).orElse(null));
 			}
 
 		}
@@ -366,6 +366,7 @@ public class DetailsItemGenerationJPA {
 			if (edmMetaId.getOrganizationsByMetaId() != null && !edmMetaId.getOrganizationsByMetaId().isEmpty()) {
 				ArrayList<EDMOrganization> list = edmMetaId.getOrganizationsByMetaId().stream()
 						.filter(e -> e.getState().equals(State.PUBLISHED.toString()))
+						.sorted()
 						.collect(Collectors.toCollection(ArrayList::new));
 				organizations.addAll(list);
 			}
@@ -384,6 +385,7 @@ public class DetailsItemGenerationJPA {
 
 				mainOrganizationLegalName = org.getOrganizationLegalnameByInstanceId().stream()
 						.map(EDMOrganizationLegalname::getLegalname)
+						.sorted()
 						.collect(Collectors.joining("."));
 
 				if (Objects.nonNull(org.getSon()) && !org.getSon().isEmpty()) {
@@ -403,6 +405,7 @@ public class DetailsItemGenerationJPA {
 								return relatedDataprovider;
 
 							})
+							.sorted()
 							.collect(Collectors.toList())
 							);
 				}
