@@ -263,7 +263,7 @@ public class DetailsItemGenerationJPA {
 		if(ws!=null && !ws.getContactpointWebservicesByInstanceId().isEmpty()) {
 			distribution.getAvailableContactPoints()
 			.add(new AvailableContactPointsBuilder()
-					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + ws.getInstanceId()+"&type="+ProviderType.SERVICEPROVIDERS)
+					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + ws.getInstanceId()+"&contactType="+ProviderType.SERVICEPROVIDERS)
 					.type(ProviderType.SERVICEPROVIDERS).build());
 		}
 
@@ -271,14 +271,14 @@ public class DetailsItemGenerationJPA {
 		if(!dp.getContactpointDataproductsByInstanceId().isEmpty()) {
 			distribution.getAvailableContactPoints()
 			.add(new AvailableContactPointsBuilder()
-					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + dp.getInstanceId()+"&type="+ProviderType.DATAPROVIDERS)
+					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + dp.getInstanceId()+"&contactType="+ProviderType.DATAPROVIDERS)
 					.type(ProviderType.DATAPROVIDERS).build());
 		}
 
 		if((ws!=null && !ws.getContactpointWebservicesByInstanceId().isEmpty() && !dp.getContactpointDataproductsByInstanceId().isEmpty())){
 			distribution.getAvailableContactPoints()
 			.add(new AvailableContactPointsBuilder()
-					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + distribution.getId()+"&type="+ProviderType.ALL)
+					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + distribution.getId()+"&contactType="+ProviderType.ALL)
 					.type(ProviderType.ALL).build());
 		}
 
