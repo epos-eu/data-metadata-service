@@ -366,7 +366,6 @@ public class DetailsItemGenerationJPA {
 			if (edmMetaId.getOrganizationsByMetaId() != null && !edmMetaId.getOrganizationsByMetaId().isEmpty()) {
 				ArrayList<EDMOrganization> list = edmMetaId.getOrganizationsByMetaId().stream()
 						.filter(e -> e.getState().equals(State.PUBLISHED.toString()))
-						.sorted()
 						.collect(Collectors.toCollection(ArrayList::new));
 				organizations.addAll(list);
 			}
@@ -385,7 +384,6 @@ public class DetailsItemGenerationJPA {
 
 				mainOrganizationLegalName = org.getOrganizationLegalnameByInstanceId().stream()
 						.map(EDMOrganizationLegalname::getLegalname)
-						.sorted()
 						.collect(Collectors.joining("."));
 
 				if (Objects.nonNull(org.getSon()) && !org.getSon().isEmpty()) {
@@ -402,24 +400,29 @@ public class DetailsItemGenerationJPA {
 								DataServiceProvider relatedDataprovider = new DataServiceProvider();
 								relatedDataprovider.setDataProviderLegalName(relatedOrganizationLegalName);
 								relatedDataprovider.setDataProviderUrl(relatedOrganization.getUrl());
+								relatedDataprovider.setCountry(relatedOrganization.getAddressByAddressId().getCountry());
 								return relatedDataprovider;
 
 							})
-							.sorted()
 							.collect(Collectors.toList())
 							);
+					relatedOrganizations.sort(Comparator.comparing(DataServiceProvider::getDataProviderLegalName));
 				}
 
 				DataServiceProvider dataServiceProvider = new DataServiceProvider();
 				dataServiceProvider.setDataProviderLegalName(mainOrganizationLegalName);
 				dataServiceProvider.setRelatedDataProvider(relatedOrganizations);
 				dataServiceProvider.setDataProviderUrl(org.getUrl());
+				dataServiceProvider.setCountry(org.getAddressByAddressId().getCountry());
 
 				organizationStructure.add(dataServiceProvider);
 
 			}
 
 		}
+		
+
+		organizationStructure.sort(Comparator.comparing(DataServiceProvider::getDataProviderLegalName));
 		return organizationStructure;
 	}
 }

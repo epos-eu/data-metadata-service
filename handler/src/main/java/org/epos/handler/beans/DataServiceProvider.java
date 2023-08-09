@@ -7,6 +7,7 @@ public class DataServiceProvider {
 
     private String dataProviderLegalName;
     private String dataProviderUrl;
+    private String country;
     private List<DataServiceProvider> relatedDataServiceProvider;
 
     public String getDataProviderLegalName() {
@@ -33,25 +34,33 @@ public class DataServiceProvider {
         this.dataProviderUrl = dataProviderUrl;
     }
 
-    @Override
-    public String toString() {
-        return "DataProvider{" +
-                "dataProviderLegalName='" + dataProviderLegalName + '\'' +
-                ", dataProviderUrl='" + dataProviderUrl + '\'' +
-                ", relatedDataProvider=" + relatedDataServiceProvider +
-                '}';
-    }
+    public String getCountry() {
+		return country;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DataServiceProvider that = (DataServiceProvider) o;
-        return Objects.equals(getDataProviderLegalName(), that.getDataProviderLegalName()) && Objects.equals(getDataProviderUrl(), that.getDataProviderUrl()) && Objects.equals(getRelatedDataProvider(), that.getRelatedDataProvider());
-    }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDataProviderLegalName(), getDataProviderUrl(), getRelatedDataProvider());
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(country, dataProviderLegalName, dataProviderUrl, relatedDataServiceProvider);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DataServiceProvider other = (DataServiceProvider) obj;
+		return Objects.equals(country, other.country)
+				&& Objects.equals(dataProviderLegalName, other.dataProviderLegalName)
+				&& Objects.equals(dataProviderUrl, other.dataProviderUrl)
+				&& Objects.equals(relatedDataServiceProvider, other.relatedDataServiceProvider);
+	}
+
+	
 }
