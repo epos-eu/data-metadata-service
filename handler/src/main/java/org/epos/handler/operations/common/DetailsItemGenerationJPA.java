@@ -400,7 +400,7 @@ public class DetailsItemGenerationJPA {
 								DataServiceProvider relatedDataprovider = new DataServiceProvider();
 								relatedDataprovider.setDataProviderLegalName(relatedOrganizationLegalName);
 								relatedDataprovider.setDataProviderUrl(relatedOrganization.getUrl());
-								relatedDataprovider.setCountry(relatedOrganization.getAddressByAddressId().getCountry());
+								if(relatedOrganization.getAddressByAddressId()!=null)relatedDataprovider.setCountry(relatedOrganization.getAddressByAddressId().getCountry());
 								return relatedDataprovider;
 
 							})
@@ -413,7 +413,7 @@ public class DetailsItemGenerationJPA {
 				dataServiceProvider.setDataProviderLegalName(mainOrganizationLegalName);
 				dataServiceProvider.setRelatedDataProvider(relatedOrganizations);
 				dataServiceProvider.setDataProviderUrl(org.getUrl());
-				dataServiceProvider.setCountry(org.getAddressByAddressId().getCountry());
+				if(org.getAddressByAddressId()!=null) dataServiceProvider.setCountry(org.getAddressByAddressId().getCountry());
 
 				organizationStructure.add(dataServiceProvider);
 
