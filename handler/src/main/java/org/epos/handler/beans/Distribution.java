@@ -16,6 +16,8 @@ public class Distribution implements Serializable {
 	private String operationid;
 	
 	private String href;
+
+	private HashMap<String, ArrayList<String>> categories;
 	
 	private String id;
 	private String uid;
@@ -107,6 +109,14 @@ public class Distribution implements Serializable {
 
 	public String getProductid() {
 		return productid;
+	}
+
+	public HashMap<String, ArrayList<String>> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(HashMap<String, ArrayList<String>> categories) {
+		this.categories = categories;
 	}
 
 	public void setProductid(String productid) {

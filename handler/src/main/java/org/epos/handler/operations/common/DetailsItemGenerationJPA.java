@@ -1,14 +1,18 @@
 package org.epos.handler.operations.common;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.epos.eposdatamodel.ContactPoint;
 import org.epos.eposdatamodel.LinkedEntity;
 import org.epos.eposdatamodel.State;
 import org.epos.handler.HeaderParser;
 import org.epos.handler.beans.AvailableContactPoints;
 import org.epos.handler.beans.AvailableContactPoints.AvailableContactPointsBuilder;
+import org.epos.handler.beans.DiscoveryItem.DiscoveryItemBuilder;
 import org.epos.handler.beans.DataServiceProvider;
+import org.epos.handler.beans.DiscoveryItem;
 import org.epos.handler.beans.ServiceParameter;
 import org.epos.handler.beans.SpatialInformation;
 import org.epos.handler.beans.TemporalCoverage;
@@ -16,8 +20,10 @@ import org.epos.handler.constants.EnvironmentVariables;
 import org.epos.handler.dbapi.dbapiimplementation.ContactPointDBAPI;
 import org.epos.handler.dbapi.model.*;
 import org.epos.handler.dbapi.service.DBService;
+import org.epos.handler.dbapi.util.EDMUtil;
 import org.epos.handler.enums.DataOriginType;
 import org.epos.handler.enums.ProviderType;
+import org.epos.handler.operations.resources.FacetsGeneration;
 import org.epos.handler.support.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -355,11 +361,78 @@ public class DetailsItemGenerationJPA {
 
 		distribution.setAvailableFormats(AvailableFormatsGeneration.generate(distributionSelected));
 
+		// TEMP SECTION
+		ArrayList<DiscoveryItem> discoveryList = new ArrayList<>();
+
+		Set<String> facetsDataProviders = new HashSet<String>();
+		if(dp.getPublishersByInstanceId() != null ) {
+			for (EDMEdmEntityId edmMetaId : dp.getPublishersByInstanceId().stream().map(EDMPublisher::getEdmEntityIdByMetaOrganizationId).collect(Collectors.toList())) {
+				if (edmMetaId.getOrganizationsByMetaId() != null && !edmMetaId.getOrganizationsByMetaId().isEmpty()) {
+					ArrayList<EDMOrganization> list = new ArrayList<>(edmMetaId.getOrganizationsByMetaId());
+					list.sort(EDMUtil::compareEntityVersion);
+					EDMOrganization edmDataproductRelatedOrganization = list.get(0);
+					if(edmDataproductRelatedOrganization.getOrganizationLegalnameByInstanceId() != null && !edmDataproductRelatedOrganization.getOrganizationLegalnameByInstanceId().isEmpty()) {
+						facetsDataProviders.add(edmDataproductRelatedOrganization.getOrganizationLegalnameByInstanceId().stream().findFirst().get().getLegalname());
+					}
+				}
+			}
+		}
+
+		Set<String> facetsServiceProviders = new HashSet<String>();
+		if(distributionSelected.getWebserviceByAccessService() != null && distributionSelected.getWebserviceByAccessService().getEdmEntityIdByProvider() != null) {
+			EDMEdmEntityId edmMetaId = distributionSelected.getWebserviceByAccessService().getEdmEntityIdByProvider();
+			if (edmMetaId.getOrganizationsByMetaId() != null && !edmMetaId.getOrganizationsByMetaId().isEmpty()) {
+				ArrayList<EDMOrganization> list = new ArrayList<>(edmMetaId.getOrganizationsByMetaId());
+				list.sort(EDMUtil::compareEntityVersion);
+				EDMOrganization edmWebserviceRelatedOrganization = list.get(0);
+				if(edmWebserviceRelatedOrganization.getOrganizationLegalnameByInstanceId() != null && !edmWebserviceRelatedOrganization.getOrganizationLegalnameByInstanceId().isEmpty()) {
+					facetsServiceProviders.add(edmWebserviceRelatedOrganization.getOrganizationLegalnameByInstanceId().stream().findFirst().get().getLegalname());
+				}
+			}
+		}
+		List<String> categoryList = dp.getDataproductCategoriesByInstanceId().stream()
+				.map(EDMDataproductCategory::getCategoryByCategoryId)
+				.filter(Objects::nonNull)
+				.filter(e->e.getUid().contains("category:"))
+				.map(EDMCategory::getUid)
+				.collect(Collectors.toList());
+
+		discoveryList.add(new DiscoveryItemBuilder(distributionSelected.getMetaId(),
+				EnvironmentVariables.API_HOST + API_PATH_DETAILS + distributionSelected.getMetaId())
+				.uid(distribution.getUid())
+				.title(distribution.getTitle())
+				.description(distribution.getDescription())
+				.ddss(dp.getDataproductIdentifiersByInstanceId().stream()
+						.filter(identifier -> identifier.getType().equals("DDSS-ID")).findFirst().orElse(new EDMDataproductIdentifier()).getIdentifier())
+				.availableFormats(AvailableFormatsGeneration.generate(distributionSelected))
+				.setSha256id(DigestUtils.sha256Hex(distribution.getUid()))
+				.setDataprovider(facetsDataProviders)
+				.setServiceProvider(facetsServiceProviders)
+				.setDataproductCategories(categoryList.isEmpty()? null : categoryList.get(0))
+				.build());
+
+		JsonObject facetsTempResponse = FacetsGeneration.generateResponseUsingCategories( new JsonObject(), discoveryList).get("results").getAsJsonObject();
+		JsonObject distributionResponse = gson.toJsonTree(distribution).getAsJsonObject();
+		cleanFacetsCategoriesPaths(facetsTempResponse);
+		distributionResponse.add("categories",facetsTempResponse);
+
 		em.close();
 
-		return gson.toJsonTree(distribution).getAsJsonObject();
+		return distributionResponse;
 	}
-
+	
+	private static void cleanFacetsCategoriesPaths(JsonObject facetsTempResponse) {
+		if(facetsTempResponse.has("children")) {
+			for(JsonElement children : facetsTempResponse.get("children").getAsJsonArray()) {
+				cleanFacetsCategoriesPaths(children.getAsJsonObject());
+			}
+		}
+		if(facetsTempResponse.has("distributions")) {
+			facetsTempResponse.remove("distributions");
+		}
+		
+	}
+	
 	private static List<DataServiceProvider> getProviders(List<EDMEdmEntityId> organizationsCollection) {
 		List<EDMOrganization> organizations = new ArrayList<>();
 		for (EDMEdmEntityId edmMetaId : organizationsCollection) {
@@ -420,7 +493,7 @@ public class DetailsItemGenerationJPA {
 			}
 
 		}
-		
+
 
 		organizationStructure.sort(Comparator.comparing(DataServiceProvider::getDataProviderLegalName));
 		return organizationStructure;
