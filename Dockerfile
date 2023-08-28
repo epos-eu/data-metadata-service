@@ -1,6 +1,5 @@
 FROM amazoncorretto:17-alpine-jdk
 
 ADD handler/target/handler-*.jar app.jar
-ADD handler/src/main/resources/facets/ /facets/
 
 ENTRYPOINT ["java","-Dlog4j.configurationFile=/etc/log4j2/log4j2.properties","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

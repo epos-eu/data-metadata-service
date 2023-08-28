@@ -50,7 +50,7 @@ public class FacetsGeneration {
 	}
 
 	public static JsonObject generateResponseUsingCategories(JsonObject response,ArrayList<DiscoveryItem> discoveryList) {
-		FacetsNodeTree fnt = new FacetsNodeTree(false);
+		FacetsNodeTree fnt = new FacetsNodeTree(true);
 		fnt.getNodes().forEach(node -> {
 			if(node.getChildren()!=null && node.getChildren().size()!=0) {
 				for(Node child : node.getChildren()) {

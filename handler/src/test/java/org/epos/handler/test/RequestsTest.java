@@ -18,7 +18,7 @@ public class RequestsTest {
 		RequestHandler rh = new RequestHandler(Actor.getInstance(BuiltInActorType.DB_CONNECTOR.verbLabel()).get());
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("epos_operation-type", "get");
-		headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.details");
+		headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.search");
 		//headers.put("epos_request-type", "converter-plugins");
 		//headers.put("epos_request-type", "api.external-access-service.v1.execute");
 		//headers.put("epos_request-type", "testing.k8s-epos-deploy.new-environment.api.external-access-service.v1.execute");
@@ -32,7 +32,7 @@ public class RequestsTest {
 		String payloadSoftwaresPlugin = "{\"type\":\"plugins\"}";
 		String payloadResourcesPlugin = "{}";
 		String payloadSoftwaresEmpty = "{\"type\":\"plugins\", \"operation\" : \"anthropogenic_hazards/webservice/is-epos_platform/apps\"}";
-		String payloadEmptySearch = "{\"facets\":\"true\",\"facetstype\":\"serviceproviders\"}";
+		String payloadEmptySearch = "{\"facets\":\"true\",\"facetstype\":\"categories\"}";
 		String payloadMonitoring = "{}";
 		String payloadEmptyResponse = "{\"q\":\"Acceleration\",\"facets\":\"true\"}";
 		String payloadSearchOrganizations = "{\"organisations\":\"86b9d420-d626-4720-a6c9-0649f30cc2ac\",\"facets\":\"true\"}";
@@ -44,7 +44,7 @@ public class RequestsTest {
 		//file.close();
 		//ZabbixExecutor.getInstance();
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
-		System.out.println(rh.handle(payloadDetails, ServiceType.METADATA, headers));
+		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
 
