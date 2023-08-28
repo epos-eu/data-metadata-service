@@ -1,12 +1,16 @@
 package org.epos.handler.test;
 
+import static org.epos.handler.support.Utils.gson;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.epos.handler.RequestHandler;
+import org.epos.handler.beans.Facets;
 import org.epos.handler.operations.monitoring.ZabbixExecutor;
+import org.epos.handler.support.facets.Node;
 import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
@@ -44,6 +48,7 @@ public class RequestsTest {
 		//file.close();
 		//ZabbixExecutor.getInstance();
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
+		System.out.println(Facets.getFacetsFromDatabase());
 		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}

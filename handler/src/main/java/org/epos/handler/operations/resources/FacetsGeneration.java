@@ -58,7 +58,7 @@ public class FacetsGeneration {
 						List<DiscoveryItem> distributionsItem = new ArrayList<>();
 						List<String> ddssS =Arrays.asList(child.getDdss().replaceAll("\\s+","").split("\\,"));
 						for(DiscoveryItem dp : discoveryList) {
-							if(ddssS.contains(dp.getDdss())){
+							if(ddssS.contains(dp.getDataproductCategories())){
 								distributionsItem.add(dp);
 							}
 						}
