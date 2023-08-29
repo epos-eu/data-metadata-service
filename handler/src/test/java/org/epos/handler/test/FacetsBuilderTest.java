@@ -21,7 +21,7 @@ public class FacetsBuilderTest {
 
     public static void main(String[] argv) throws IOException {
 
-        System.out.println(Facets.getFacetsFromDatabase());
+        System.out.println(Facets.getInstance().getFacetsFromDatabase());
 
     }
 }

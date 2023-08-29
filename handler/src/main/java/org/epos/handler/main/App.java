@@ -106,6 +106,7 @@ public class App implements CommandLineRunner
 		if(EnvironmentVariables.MONITORING.equals("true")) {
 			ZabbixExecutor.getInstance();
 		}
+		Facets.getInstance();
 	}
 
 }

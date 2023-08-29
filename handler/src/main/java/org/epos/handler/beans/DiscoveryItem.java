@@ -17,7 +17,7 @@ public class DiscoveryItem implements Serializable {
 	private transient String sha256id;
 	private transient Set<String> dataprovider;
 	private transient Set<String> serviceprovider;
-	private transient String dataproductCategories;
+	private transient List<String> dataproductCategories;
 	private String ddss;
 	private String title;
 	private String description;
@@ -89,11 +89,11 @@ public class DiscoveryItem implements Serializable {
 		this.serviceprovider = serviceprovider;
 	}
 
-	public String getDataproductCategories() {
+	public List<String> getDataproductCategories() {
 		return dataproductCategories;
 	}
 
-	public void setDataproductCategories(String dataproductCategories) {
+	public void setDataproductCategories(List<String> dataproductCategories) {
 		this.dataproductCategories = dataproductCategories;
 	}
 
@@ -153,7 +153,7 @@ public class DiscoveryItem implements Serializable {
 		private transient String sha256id;
 		private transient Set<String> dataprovider;
 		private transient Set<String> serviceprovider;
-		private transient String dataproductCategories;
+		private transient List<String> dataproductCategories;
 		private transient String ddss;
 		private String title;
 		private String description;
@@ -186,7 +186,7 @@ public class DiscoveryItem implements Serializable {
 			return this;
 		}
 		
-		public DiscoveryItemBuilder setDataproductCategories(String dataproductCategories) {
+		public DiscoveryItemBuilder setDataproductCategories(List<String> dataproductCategories) {
 			this.dataproductCategories = dataproductCategories;
 			return this;
 		}

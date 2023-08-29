@@ -1,16 +1,11 @@
 package org.epos.handler.test;
 
-import static org.epos.handler.support.Utils.gson;
-
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.epos.handler.RequestHandler;
 import org.epos.handler.beans.Facets;
-import org.epos.handler.operations.monitoring.ZabbixExecutor;
-import org.epos.handler.support.facets.Node;
 import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
@@ -37,6 +32,7 @@ public class RequestsTest {
 		String payloadResourcesPlugin = "{}";
 		String payloadSoftwaresEmpty = "{\"type\":\"plugins\", \"operation\" : \"anthropogenic_hazards/webservice/is-epos_platform/apps\"}";
 		String payloadEmptySearch = "{\"facets\":\"true\",\"facetstype\":\"categories\"}";
+		String payloadQSearch = "{\"facets\":\"true\",\"facetstype\":\"categories\",\"q\":\"Geological Feature Download Service\"}";
 		String payloadMonitoring = "{}";
 		String payloadEmptyResponse = "{\"q\":\"Acceleration\",\"facets\":\"true\"}";
 		String payloadSearchOrganizations = "{\"organisations\":\"86b9d420-d626-4720-a6c9-0649f30cc2ac\",\"facets\":\"true\"}";
@@ -48,8 +44,15 @@ public class RequestsTest {
 		//file.close();
 		//ZabbixExecutor.getInstance();
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
-		System.out.println(Facets.getFacetsFromDatabase());
+		Facets.getInstance();
+		try {
+			Thread.sleep(20000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
+		//rh.handle(payloadQSearch, ServiceType.METADATA, headers);
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
 

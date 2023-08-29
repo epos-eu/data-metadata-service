@@ -1,6 +1,5 @@
 package org.epos.handler.support.facets;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +16,13 @@ public class FacetsNodeTree {
 	public FacetsNodeTree(Boolean fromDatabase) {
 		try {
 			if(fromDatabase) {
-				this.facets = gson.fromJson(Facets.getFacetsFromDatabase(), Node.class);
+				this.facets = gson.fromJson(Facets.getInstance().getFacetsFromDatabase(), Node.class);
 				nodes = returnAllNodes(facets);
 			}else {
-				this.facets = gson.fromJson(Facets.getFacets(), Node.class);
+				this.facets = gson.fromJson(Facets.getInstance().getFacetsStatic(), Node.class);
 				nodes = returnAllNodes(facets);
 			}
-		} catch (JsonSyntaxException | IOException e) {
+		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
 		}
 	}

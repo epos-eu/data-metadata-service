@@ -56,10 +56,12 @@ public class FacetsGeneration {
 				for(Node child : node.getChildren()) {
 					if(child.getDdss()!=null) {
 						List<DiscoveryItem> distributionsItem = new ArrayList<>();
-						List<String> ddssS =Arrays.asList(child.getDdss().replaceAll("\\s+","").split("\\,"));
 						for(DiscoveryItem dp : discoveryList) {
-							if(ddssS.contains(dp.getDataproductCategories())){
-								distributionsItem.add(dp);
+							if(dp.getDataproductCategories() == null) System.err.println(dp.getTitle());
+							else {
+								if(dp.getDataproductCategories().contains(child.getDdss())){
+									distributionsItem.add(dp);
+								}
 							}
 						}
 						if (distributionsItem.size() > 0) {

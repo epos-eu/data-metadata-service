@@ -408,7 +408,7 @@ public class DetailsItemGenerationJPA {
 				.setSha256id(DigestUtils.sha256Hex(distribution.getUid()))
 				.setDataprovider(facetsDataProviders)
 				.setServiceProvider(facetsServiceProviders)
-				.setDataproductCategories(categoryList.isEmpty()? null : categoryList.get(0))
+				.setDataproductCategories(categoryList.isEmpty()? null : categoryList)
 				.build());
 
 		JsonObject facetsTempResponse = FacetsGeneration.generateResponseUsingCategories( new JsonObject(), discoveryList).get("results").getAsJsonObject();

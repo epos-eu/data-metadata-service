@@ -175,7 +175,7 @@ public class SearchGenerationJPA {
 								.setSha256id(DigestUtils.sha256Hex(distribution.getUid()))
 								.setDataprovider(facetsDataProviders)
 								.setServiceProvider(facetsServiceProviders)
-								.setDataproductCategories(categoryList.isEmpty()? null : categoryList.get(0))
+								.setDataproductCategories(categoryList.isEmpty()? null : categoryList)
 								.build());
 					}
 				});
@@ -206,6 +206,8 @@ public class SearchGenerationJPA {
 		});
 
 		LOGGER.info("Final number of results: "+discoveryList.size());
+		
+		System.out.println(discoveryList.toString());
 		//monitoring
 		if(EnvironmentVariables.MONITORING.equals("true")) {
 			LOGGER.info("Monitoring cross-validation activated, check if the services are up and running...");

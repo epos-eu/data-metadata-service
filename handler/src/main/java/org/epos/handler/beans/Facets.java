@@ -9,6 +9,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ import org.epos.eposdatamodel.Category;
 import org.epos.eposdatamodel.CategoryScheme;
 import org.epos.handler.dbapi.dbapiimplementation.CategoryDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.CategorySchemeDBAPI;
+import org.epos.handler.operations.monitoring.ZabbixExecutor;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,15 +27,43 @@ import com.google.gson.JsonObject;
 
 public class Facets {
 
+	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private JsonObject facetsStatic;
+	private JsonObject facetsFromDatabase;
+	
 	private static File[] getResourceFolderFiles(String folder) {
 		File[] files = new File(folder).listFiles();
 		Arrays.sort(files);
 		return files;
 	}
 
-	private Facets() {}
+	private Facets() {
 
-	public static JsonObject getFacets() throws IOException {
+		final Runnable updater = new Runnable() {
+			public void run() { 
+				try {
+					System.out.println("Get Facets static");
+					facetsStatic = generateFacets();
+				}catch(Exception e) {}
+				try {
+					System.out.println("Get Facets from database");
+					facetsFromDatabase = generateFacetsFromDatabase();
+				}catch(Exception e) {}
+				System.out.println("Facets created successfully");
+			}
+		};
+		scheduler.scheduleAtFixedRate(updater, 0, 15, TimeUnit.MINUTES);
+	}
+	
+	private static Facets facets;
+	
+	public static Facets getInstance() {
+		System.out.println("Get Facets instance");
+		if(facets==null) facets = new Facets();
+		return facets;
+	}
+
+	private JsonObject generateFacets() throws IOException {
 		Gson gson = new Gson();
 		JsonObject facetsObject = new JsonObject();
 		JsonArray domainsFacets = new JsonArray();
@@ -50,7 +82,7 @@ public class Facets {
 		return facetsObject;
 	}
 
-	public static JsonObject getFacetsFromDatabase() throws IOException {
+	private JsonObject generateFacetsFromDatabase() throws IOException {
 		JsonArray domainsFacets = new JsonArray();
 		JsonObject facetsObject = new JsonObject();
 		
@@ -64,7 +96,7 @@ public class Facets {
 			JsonObject facetDomain = new JsonObject();
 
 			facetDomain.addProperty("name", sch.getTitle());
-			facetDomain.add("children", recursiveChildren(categoriesList, sch.getUid() ,null));
+			facetDomain.add("children", recursiveChildren(categoriesList, sch.getInstanceId(),null));
 			domainsFacets.add(facetDomain);
 		}
 		facetsObject.addProperty("name", "domains");
@@ -73,12 +105,28 @@ public class Facets {
 		return facetsObject;
 	}
 
-	public static JsonArray recursiveChildren(List<Category> categoriesList, String domain, String father) {
+	public JsonObject getFacetsStatic() {
+		return facetsStatic;
+	}
+
+	public void setFacetsStatic(JsonObject facetsStatic) {
+		this.facetsStatic = facetsStatic;
+	}
+
+	public JsonObject getFacetsFromDatabase() {
+		return facetsFromDatabase;
+	}
+
+	public void setFacetsFromDatabase(JsonObject facetsFromDatabase) {
+		this.facetsFromDatabase = facetsFromDatabase;
+	}
+
+	private JsonArray recursiveChildren(List<Category> categoriesList, String domain, String father) {
 		CategorySchemeDBAPI schemes = new CategorySchemeDBAPI();
 		JsonArray children = new JsonArray();
 		if(father==null) {
 			for(Category cat : categoriesList) {
-				if(cat.getInScheme().equals(schemes.getByUid(domain).get(0).getInstanceId())) {
+				if(cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()==null) {
 						JsonObject facetsObject = new JsonObject();
 						facetsObject.addProperty("name", cat.getDescription());
@@ -89,7 +137,7 @@ public class Facets {
 			}
 		} else {
 			for(Category cat : categoriesList) {
-				if(cat.getInScheme().equals(schemes.getByUid(domain).get(0).getInstanceId())) {
+				if(cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()!=null && cat.getBroader().equals(father)) {
 						JsonObject facetsObject = new JsonObject();
 						if(cat.getNarrower() == null) {
