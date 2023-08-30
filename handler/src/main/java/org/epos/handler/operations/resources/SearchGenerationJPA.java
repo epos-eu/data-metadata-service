@@ -206,8 +206,6 @@ public class SearchGenerationJPA {
 		});
 
 		LOGGER.info("Final number of results: "+discoveryList.size());
-		
-		System.out.println(discoveryList.toString());
 		//monitoring
 		if(EnvironmentVariables.MONITORING.equals("true")) {
 			LOGGER.info("Monitoring cross-validation activated, check if the services are up and running...");
