@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.epos.handler.RequestHandler;
-import org.epos.handler.beans.Facets;
+import org.epos.handler.facets.Facets;
+import org.epos.handler.facets.FacetsNodeTree;
 import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
 import org.epos.router_framework.types.ServiceType;
+
+import com.google.gson.Gson;
 
 public class RequestsTest {
 	

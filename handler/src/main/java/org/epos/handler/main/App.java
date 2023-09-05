@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.epos.handler.RequestHandler;
-import org.epos.handler.beans.Facets;
 import org.epos.handler.constants.EnvironmentVariables;
+import org.epos.handler.facets.Facets;
 import org.epos.handler.operations.monitoring.ZabbixExecutor;
 import org.epos.router_framework.RelayRouter;
 import org.epos.router_framework.RelayRouterBuilder;

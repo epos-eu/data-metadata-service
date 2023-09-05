@@ -3,8 +3,8 @@ package org.epos.handler.operations.resources;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.epos.handler.beans.DiscoveryItem;
 import org.epos.handler.beans.AvailableFormat;
+import org.epos.handler.beans.DiscoveryItem;
 import org.epos.handler.beans.AvailableFormat.AvailableFormatBuilder;
 import org.epos.handler.beans.DiscoveryItem.DiscoveryItemBuilder;
 import org.epos.handler.constants.EnvironmentVariables;
@@ -15,8 +15,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.epos.handler.dbapi.dbapiimplementation.*;
+import org.epos.handler.support.BBoxToPolygon;
 import org.epos.handler.support.Utils;
-import org.epos.handler.support.spatial.BBoxToPolygon;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.io.WKTReader;

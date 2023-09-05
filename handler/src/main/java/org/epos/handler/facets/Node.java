@@ -1,4 +1,4 @@
-package org.epos.handler.support.facets;
+package org.epos.handler.facets;
 
 import java.util.ArrayList;
 import java.util.List;

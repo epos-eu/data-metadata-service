@@ -1,4 +1,4 @@
-package org.epos.handler.operations.resources;
+package org.epos.handler.facets;
 
 import static org.epos.handler.support.Utils.gson;
 
@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.epos.handler.beans.DiscoveryItem;
-import org.epos.handler.beans.OrganizationBean;
-import org.epos.handler.support.facets.FacetsNodeTree;
-import org.epos.handler.support.facets.Node;
 
 import com.google.gson.JsonObject;
 

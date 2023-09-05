@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.epos.handler.beans.Plugin;
 import org.epos.handler.dbapi.dbapiimplementation.SoftwareApplicationDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.SoftwareSourceCodeDBAPI;
-import org.epos.handler.beans.Plugin;
 import org.epos.eposdatamodel.*;
 import org.epos.handler.support.Utils;
 import org.slf4j.Logger;

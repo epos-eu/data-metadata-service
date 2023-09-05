@@ -1,26 +1,22 @@
-package org.epos.handler.beans;
+package org.epos.handler.facets;
 
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.epos.eposdatamodel.Category;
 import org.epos.eposdatamodel.CategoryScheme;
 import org.epos.handler.dbapi.dbapiimplementation.CategoryDBAPI;
 import org.epos.handler.dbapi.dbapiimplementation.CategorySchemeDBAPI;
-import org.epos.handler.operations.monitoring.ZabbixExecutor;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -30,6 +26,7 @@ public class Facets {
 	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private JsonObject facetsStatic;
 	private JsonObject facetsFromDatabase;
+
 	
 	private static File[] getResourceFolderFiles(String folder) {
 		File[] files = new File(folder).listFiles();
@@ -48,7 +45,7 @@ public class Facets {
 				try {
 					System.out.println("Get Facets from database");
 					facetsFromDatabase = generateFacetsFromDatabase();
-				}catch(Exception e) {e.printStackTrace();}
+				}catch(Exception e) {}
 				System.out.println("Facets created successfully");
 			}
 		};
@@ -81,31 +78,73 @@ public class Facets {
 
 		return facetsObject;
 	}
-
+	
 	private JsonObject generateFacetsFromDatabase() throws IOException {
 		JsonArray domainsFacets = new JsonArray();
 		JsonObject facetsObject = new JsonObject();
 		
 		CategorySchemeDBAPI schemes = new CategorySchemeDBAPI();
 		CategoryDBAPI categories = new CategoryDBAPI();
-
+		
 		List<CategoryScheme> categorySchemesList = schemes.getAll().stream().filter(e->e.getUid().contains("category:")).collect(Collectors.toList());
 		List<Category> categoriesList = categories.getAll().stream().filter(e->e.getUid().contains("category:")).collect(Collectors.toList());
-
-		for(CategoryScheme sch : categorySchemesList) {
+		
+		for(CategoryScheme scheme : categorySchemesList) {
 			JsonObject facetDomain = new JsonObject();
-			System.out.println(sch.getTitle());
 
-			facetDomain.addProperty("name", sch.getTitle());
-			facetDomain.add("children", recursiveChildren(categoriesList, sch.getInstanceId(),null));
+			facetDomain.addProperty("name", scheme.getTitle());
+			facetDomain.add("children", recursiveChildren(categoriesList, scheme.getInstanceId(),null));
 			domainsFacets.add(facetDomain);
 		}
+		
 		facetsObject.addProperty("name", "domains");
 		facetsObject.add("children", domainsFacets);
-
+		
 		return facetsObject;
+		
 	}
-
+	
+	private JsonArray recursiveChildren(List<Category> categoriesList, String domain, String father) {
+		JsonArray children = new JsonArray();
+		if(father==null) {
+			for(Category cat : categoriesList) {
+				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
+					if(cat.getBroader()==null) {
+						JsonObject facetsObject = new JsonObject();
+						facetsObject.addProperty("name", cat.getName());
+						JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
+						if(childrenList.isEmpty())
+							facetsObject.addProperty("ddss", cat.getUid());
+						else
+							facetsObject.add("children", childrenList);
+						children.add(facetsObject);
+					}
+				}
+			}
+		} else {
+			for(Category cat : categoriesList) {
+				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
+					if(cat.getBroader()!=null && cat.getBroader().contains(father)) {
+						JsonObject facetsObject = new JsonObject();
+						if(cat.getNarrower() == null) {
+							facetsObject.addProperty("name", cat.getName());
+							facetsObject.addProperty("ddss", cat.getUid());
+						} else {
+							facetsObject.addProperty("name", cat.getName());
+							JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
+							if(childrenList.isEmpty())
+								facetsObject.addProperty("ddss", cat.getUid());
+							else
+								facetsObject.add("children", childrenList);
+						}
+						children.add(facetsObject);
+					}
+				}
+			}
+		}
+		return children;
+	}
+	
 	public JsonObject getFacetsStatic() {
 		return facetsStatic;
 	}
@@ -122,38 +161,4 @@ public class Facets {
 		this.facetsFromDatabase = facetsFromDatabase;
 	}
 
-	private JsonArray recursiveChildren(List<Category> categoriesList, String domain, String father) {
-		JsonArray children = new JsonArray();
-		if(father==null) {
-			for(Category cat : categoriesList) {
-				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
-					if(cat.getBroader()==null) {
-						JsonObject facetsObject = new JsonObject();
-						facetsObject.addProperty("name", cat.getName());
-						facetsObject.add("children", recursiveChildren(categoriesList, domain, cat.getInstanceId()));
-						children.add(facetsObject);
-					}
-				}
-			}
-		} else {
-			for(Category cat : categoriesList) {
-				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
-					if(cat.getBroader()!=null && cat.getBroader().contains(father)) {
-						JsonObject facetsObject = new JsonObject();
-						if(cat.getNarrower() == null) {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.addProperty("ddss", cat.getUid());
-						} else {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.add("children", recursiveChildren(categoriesList, domain, cat.getInstanceId()));
-						}
-						children.add(facetsObject);
-					}
-				}
-			}
-		}
-
-		return children;
-
-	}
 }

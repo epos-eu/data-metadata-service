@@ -1,9 +1,7 @@
-package org.epos.handler.support.facets;
+package org.epos.handler.facets;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.epos.handler.beans.Facets;
 
 import com.google.gson.JsonSyntaxException;
 import static org.epos.handler.support.Utils.gson;

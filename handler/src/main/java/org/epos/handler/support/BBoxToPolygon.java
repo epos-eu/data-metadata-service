@@ -1,4 +1,4 @@
-package org.epos.handler.support.spatial;
+package org.epos.handler.support;
 
 import com.google.gson.JsonObject;
 
