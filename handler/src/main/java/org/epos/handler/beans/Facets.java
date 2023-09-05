@@ -48,7 +48,7 @@ public class Facets {
 				try {
 					System.out.println("Get Facets from database");
 					facetsFromDatabase = generateFacetsFromDatabase();
-				}catch(Exception e) {}
+				}catch(Exception e) {e.printStackTrace();}
 				System.out.println("Facets created successfully");
 			}
 		};
@@ -126,7 +126,7 @@ public class Facets {
 		JsonArray children = new JsonArray();
 		if(father==null) {
 			for(Category cat : categoriesList) {
-				if(cat.getInScheme().equals(domain)) {
+				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()==null) {
 						JsonObject facetsObject = new JsonObject();
 						facetsObject.addProperty("name", cat.getName());
@@ -137,7 +137,7 @@ public class Facets {
 			}
 		} else {
 			for(Category cat : categoriesList) {
-				if(cat.getInScheme().equals(domain)) {
+				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()!=null && cat.getBroader().contains(father)) {
 						JsonObject facetsObject = new JsonObject();
 						if(cat.getNarrower() == null) {
