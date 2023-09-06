@@ -2,6 +2,7 @@ package org.epos.handler.beans;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class DiscoveryItem implements Serializable {
@@ -25,6 +26,34 @@ public class DiscoveryItem implements Serializable {
 	private String statusTimestamp;
 	private List<AvailableFormat> availableFormats;
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(availableFormats, ddss, description, href, id, status, statusTimestamp, title, uid);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DiscoveryItem other = (DiscoveryItem) obj;
+		return Objects.equals(availableFormats, other.availableFormats) && Objects.equals(ddss, other.ddss)
+				&& Objects.equals(description, other.description) && Objects.equals(href, other.href)
+				&& Objects.equals(id, other.id) && status == other.status
+				&& Objects.equals(statusTimestamp, other.statusTimestamp) && Objects.equals(title, other.title)
+				&& Objects.equals(uid, other.uid);
+	}
+
+	@Override
+	public String toString() {
+		return "DiscoveryItem [href=" + href + ", id=" + id + ", uid=" + uid + ", ddss=" + ddss + ", title=" + title
+				+ ", description=" + description + ", status=" + status + ", statusTimestamp=" + statusTimestamp
+				+ ", availableFormats=" + availableFormats + "]";
+	}
+
 	public DiscoveryItem(DiscoveryItemBuilder builder) {
 		this.href = builder.href;
 		this.id = builder.id;

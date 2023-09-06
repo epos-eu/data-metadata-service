@@ -112,10 +112,9 @@ public class Facets {
 					if(cat.getBroader()==null) {
 						JsonObject facetsObject = new JsonObject();
 						facetsObject.addProperty("name", cat.getName());
+						facetsObject.addProperty("ddss", cat.getUid());
 						JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
-						if(childrenList.isEmpty())
-							facetsObject.addProperty("ddss", cat.getUid());
-						else
+						if(!childrenList.isEmpty())
 							facetsObject.add("children", childrenList);
 						children.add(facetsObject);
 					}
@@ -131,10 +130,9 @@ public class Facets {
 							facetsObject.addProperty("ddss", cat.getUid());
 						} else {
 							facetsObject.addProperty("name", cat.getName());
+							facetsObject.addProperty("ddss", cat.getUid());
 							JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
-							if(childrenList.isEmpty())
-								facetsObject.addProperty("ddss", cat.getUid());
-							else
+							if(!childrenList.isEmpty())
 								facetsObject.add("children", childrenList);
 						}
 						children.add(facetsObject);
