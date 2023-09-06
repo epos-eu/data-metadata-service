@@ -27,7 +27,7 @@ public class Facets {
 	private JsonObject facetsStatic;
 	private JsonObject facetsFromDatabase;
 
-	
+
 	private static File[] getResourceFolderFiles(String folder) {
 		File[] files = new File(folder).listFiles();
 		Arrays.sort(files);
@@ -51,9 +51,9 @@ public class Facets {
 		};
 		scheduler.scheduleAtFixedRate(updater, 0, 15, TimeUnit.MINUTES);
 	}
-	
+
 	private static Facets facets;
-	
+
 	public static Facets getInstance() {
 		System.out.println("Get Facets instance");
 		if(facets==null) facets = new Facets();
@@ -78,17 +78,17 @@ public class Facets {
 
 		return facetsObject;
 	}
-	
+
 	private JsonObject generateFacetsFromDatabase() throws IOException {
 		JsonArray domainsFacets = new JsonArray();
 		JsonObject facetsObject = new JsonObject();
-		
+
 		CategorySchemeDBAPI schemes = new CategorySchemeDBAPI();
 		CategoryDBAPI categories = new CategoryDBAPI();
-		
+
 		List<CategoryScheme> categorySchemesList = schemes.getAll().stream().filter(e->e.getUid().contains("category:")).collect(Collectors.toList());
 		List<Category> categoriesList = categories.getAll().stream().filter(e->e.getUid().contains("category:")).collect(Collectors.toList());
-		
+
 		for(CategoryScheme scheme : categorySchemesList) {
 			JsonObject facetDomain = new JsonObject();
 
@@ -96,32 +96,39 @@ public class Facets {
 			facetDomain.add("children", recursiveChildren(categoriesList, scheme.getInstanceId(),null));
 			domainsFacets.add(facetDomain);
 		}
-		
+
 		facetsObject.addProperty("name", "domains");
 		facetsObject.add("children", domainsFacets);
-		
+
 		return facetsObject;
-		
+
 	}
-	
+
 	private JsonArray recursiveChildren(List<Category> categoriesList, String domain, String father) {
 		JsonArray children = new JsonArray();
 		if(father==null) {
 			for(Category cat : categoriesList) {
+				if(cat.getName().equals("Geochemical data")) System.out.println("FOUND Geochemical Data in FATHER NULL");
 				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()==null) {
 						JsonObject facetsObject = new JsonObject();
-						facetsObject.addProperty("name", cat.getName());
-						facetsObject.addProperty("ddss", cat.getUid());
-						JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
-						if(!childrenList.isEmpty())
-							facetsObject.add("children", childrenList);
+						if(cat.getNarrower() == null) {
+							facetsObject.addProperty("name", cat.getName());
+							facetsObject.addProperty("ddss", cat.getUid());
+						} else {
+							facetsObject.addProperty("name", cat.getName());
+							facetsObject.addProperty("ddss", cat.getUid());
+							JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
+							if(!childrenList.isEmpty())
+								facetsObject.add("children", childrenList);
+						}
 						children.add(facetsObject);
 					}
 				}
 			}
 		} else {
 			for(Category cat : categoriesList) {
+				if(cat.getName().equals("Geochemical data")) System.out.println("FOUND Geochemical Data in FATHER "+father);
 				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()!=null && cat.getBroader().contains(father)) {
 						JsonObject facetsObject = new JsonObject();
@@ -142,7 +149,7 @@ public class Facets {
 		}
 		return children;
 	}
-	
+
 	public JsonObject getFacetsStatic() {
 		return facetsStatic;
 	}

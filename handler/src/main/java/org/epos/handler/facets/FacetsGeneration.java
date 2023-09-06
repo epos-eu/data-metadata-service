@@ -45,6 +45,12 @@ public class FacetsGeneration {
 		response.add("results",gson.toJsonTree(fnt.getFacets()));
 		return response;
 	}
+	
+	public static JsonObject generateOnlyFacetsTree(JsonObject response,ArrayList<DiscoveryItem> discoveryList) {
+		FacetsNodeTree fnt = new FacetsNodeTree(true);
+		response.add("results",gson.toJsonTree(fnt.getFacets()));
+		return response;
+	}
 
 	public static JsonObject generateResponseUsingCategories(JsonObject response,ArrayList<DiscoveryItem> discoveryList) {
 		FacetsNodeTree fnt = new FacetsNodeTree(true);

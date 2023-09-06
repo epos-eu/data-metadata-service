@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.epos.handler.RequestHandler;
 import org.epos.handler.facets.Facets;
+import org.epos.handler.facets.FacetsGeneration;
 import org.epos.handler.facets.FacetsNodeTree;
 import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
@@ -14,6 +15,7 @@ import org.epos.router_framework.types.ServiceType;
 import org.springframework.boot.system.SystemProperties;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class RequestsTest {
 	
@@ -55,7 +57,9 @@ public class RequestsTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
+		System.out.println(FacetsGeneration.generateOnlyFacetsTree(new JsonObject(), null));
+		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
+		//System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
 		//rh.handle(payloadQSearch, ServiceType.METADATA, headers);
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
