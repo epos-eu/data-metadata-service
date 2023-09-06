@@ -11,6 +11,7 @@ import org.epos.router_framework.domain.Actor;
 import org.epos.router_framework.domain.BuiltInActorType;
 import org.epos.router_framework.exception.RoutingMessageHandlingException;
 import org.epos.router_framework.types.ServiceType;
+import org.springframework.boot.system.SystemProperties;
 
 import com.google.gson.Gson;
 
@@ -37,7 +38,7 @@ public class RequestsTest {
 		String payloadEmptySearch = "{\"facets\":\"true\",\"facetstype\":\"categories\"}";
 		String payloadQSearch = "{\"facets\":\"true\",\"facetstype\":\"categories\",\"q\":\"Geological Feature Download Service\"}";
 		String payloadMonitoring = "{}";
-		String payloadEmptyResponse = "{\"q\":\"Acceleration\",\"facets\":\"true\"}";
+		String payloadEmptyResponse = "{\"q\":\"Acceleration\",\"facets\":\"false\"}";
 		String payloadSearchOrganizations = "{\"organisations\":\"86b9d420-d626-4720-a6c9-0649f30cc2ac\",\"facets\":\"true\"}";
 		String payloadExecute = "{\"format\":\"application/epos.geo+json\",\"id\":\"0b4d5b77-87a8-4c75-90c1-086f3d695e7a\",\"params\":\"{\\\"volcano_name\\\":\\\"Etna\\\",\\\"publication_date\\\":\\\"2022-03-01T10:00\\\"}\",\"useDefaults\":\"false\"}";
 		String payloadSimpleExecute = "{\"format\":\"application/json\",\"id\":\"https://www.epos-eu.org/epos-dcat-ap/Seismology/Dataset/006/EMSC/Distribution\",\"params\":\"{\\\"maxradius\\\":\\\"\\\",\\\"minradius\\\":\\\"\\\",\\\"starttime\\\":\\\"\\\",\\\"eventid\\\":\\\"\\\",\\\"offset\\\":\\\"\\\",\\\"minnbtestimonies\\\":\\\"100\\\",\\\"lat\\\":\\\"\\\",\\\"maxdepth\\\":\\\"\\\",\\\"format\\\":\\\"geojson\\\",\\\"mindepth\\\":\\\"\\\",\\\"downloadAsFile\\\":\\\"false\\\",\\\"maxnbtestimonies\\\":\\\"\\\",\\\"minlat\\\":\\\"\\\",\\\"maxmag\\\":\\\"\\\",\\\"maxlon\\\":\\\"\\\",\\\"dayafter\\\":\\\"\\\",\\\"minmag\\\":\\\"5\\\",\\\"limit\\\":\\\"250\\\",\\\"lon\\\":\\\"\\\",\\\"orderby\\\":\\\"\\\",\\\"minlon\\\":\\\"\\\",\\\"maxlat\\\":\\\"\\\",\\\"endtime\\\":\\\"\\\"}\"}";

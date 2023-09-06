@@ -49,7 +49,27 @@ public class FacetsGeneration {
 	public static JsonObject generateResponseUsingCategories(JsonObject response,ArrayList<DiscoveryItem> discoveryList) {
 		FacetsNodeTree fnt = new FacetsNodeTree(true);
 		fnt.getNodes().forEach(node -> {
-			if(node.getChildren()!=null && node.getChildren().size()!=0) {
+			List<DiscoveryItem> distributionsItem = new ArrayList<>();
+			for(DiscoveryItem dp : discoveryList) {
+				if(dp.getDataproductCategories() == null) System.err.println(dp.getTitle());
+				else {
+					if(node.getDdss()!=null && dp.getDataproductCategories().contains(node.getDdss())){
+						distributionsItem.add(dp);
+					}
+				}
+			}
+			node.setDistributions(new ArrayList<>());
+			node.getDistributions().addAll(distributionsItem);
+		});
+		fnt.removeEmptyLeafs(fnt.getFacets());
+		response.add("results",gson.toJsonTree(fnt.getFacets()));
+		return response;
+	}
+
+	/*public static JsonObject generateResponseUsingCategories(JsonObject response,ArrayList<DiscoveryItem> discoveryList) {
+		FacetsNodeTree fnt = new FacetsNodeTree(true);
+		fnt.getNodes().forEach(node -> {
+			if(node.getChildren()!=null && node.getChildren().size()>0) {
 				for(Node child : node.getChildren()) {
 					if(child.getDdss()!=null) {
 						List<DiscoveryItem> distributionsItem = new ArrayList<>();
@@ -79,7 +99,7 @@ public class FacetsGeneration {
 		fnt.removeEmptyLeafs(fnt.getFacets());
 		response.add("results",gson.toJsonTree(fnt.getFacets()));
 		return response;
-	}
+	}*/
 
 	public static JsonObject generateResponseUsingDataproviders(JsonObject response, ArrayList<DiscoveryItem> discoveryList) {
 
