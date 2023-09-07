@@ -46,7 +46,6 @@ public class TNASearchGeneration {
 		response.add("results", results);
 		response.add("filters", filters);
 
-		JsonObject facets = new JsonObject();
 		JsonArray paleomagnetism = new JsonArray();
 		JsonArray volcanology = new JsonArray();
 		JsonArray rockPhysics = new JsonArray();
@@ -121,7 +120,6 @@ public class TNASearchGeneration {
 						.title(facilityItem.getTitle())
 						.description(facilityItem.getDescription())
 						.availableFormats(formats)
-						.ddss(facilityItem.getCategory().get(0).split("\\:")[1]) // TODO: change in dcat:theme
 						.build());
 			}catch(Exception e) {
 				LOGGER.info("Error inserting the following facility in list: "+facilityItem.getUid());
@@ -129,7 +127,7 @@ public class TNASearchGeneration {
 		});
 
 		if(parameters.has("facets") && parameters.get("facets").getAsString().equals("true")) {
-			for(DiscoveryItem item : discoveryList) {
+			/*for(DiscoveryItem item : discoveryList) {
 				switch(item.getDdss()) {
 				case "Paleomagnetism":
 					paleomagnetism.add(gson.toJsonTree(item));
@@ -148,7 +146,7 @@ public class TNASearchGeneration {
 					break;
 				}
 
-			}
+			}*/
 
 			JsonObject paleomagnetismDomain = new JsonObject();
 			paleomagnetismDomain.addProperty("name", "Paleomagnetism");

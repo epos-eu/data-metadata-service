@@ -91,7 +91,6 @@ public class Facets {
 
 		for(CategoryScheme scheme : categorySchemesList) {
 			JsonObject facetDomain = new JsonObject();
-
 			facetDomain.addProperty("name", scheme.getTitle());
 			facetDomain.add("children", recursiveChildren(categoriesList, scheme.getInstanceId(),null));
 			domainsFacets.add(facetDomain);
@@ -112,12 +111,9 @@ public class Facets {
 				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()==null) {
 						JsonObject facetsObject = new JsonObject();
-						if(cat.getNarrower() == null) {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.addProperty("ddss", cat.getUid());
-						} else {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.addProperty("ddss", cat.getUid());
+						facetsObject.addProperty("name", cat.getName());
+						facetsObject.addProperty("ddss", cat.getUid());
+						if(cat.getNarrower()!=null){
 							JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
 							if(!childrenList.isEmpty())
 								facetsObject.add("children", childrenList);
@@ -132,12 +128,9 @@ public class Facets {
 				if(cat.getInScheme()!=null && cat.getInScheme().equals(domain)) {
 					if(cat.getBroader()!=null && cat.getBroader().contains(father)) {
 						JsonObject facetsObject = new JsonObject();
-						if(cat.getNarrower() == null) {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.addProperty("ddss", cat.getUid());
-						} else {
-							facetsObject.addProperty("name", cat.getName());
-							facetsObject.addProperty("ddss", cat.getUid());
+						facetsObject.addProperty("name", cat.getName());
+						facetsObject.addProperty("ddss", cat.getUid());
+						if(cat.getNarrower() != null) {
 							JsonArray childrenList = recursiveChildren(categoriesList, domain, cat.getInstanceId());
 							if(!childrenList.isEmpty())
 								facetsObject.add("children", childrenList);

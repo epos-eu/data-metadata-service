@@ -402,8 +402,6 @@ public class DetailsItemGenerationJPA {
 				.uid(distribution.getUid())
 				.title(distribution.getTitle())
 				.description(distribution.getDescription())
-				.ddss(dp.getDataproductIdentifiersByInstanceId().stream()
-						.filter(identifier -> identifier.getType().equals("DDSS-ID")).findFirst().orElse(new EDMDataproductIdentifier()).getIdentifier())
 				.availableFormats(AvailableFormatsGeneration.generate(distributionSelected))
 				.setSha256id(DigestUtils.sha256Hex(distribution.getUid()))
 				.setDataprovider(facetsDataProviders)

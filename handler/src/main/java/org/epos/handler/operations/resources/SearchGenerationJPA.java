@@ -73,8 +73,8 @@ public class SearchGenerationJPA {
 
 		dataproducts.forEach(dataproduct -> {
 			Set<String> facetsDataProviders = new HashSet<String>();
-			String ddss = dataproduct.getDataproductIdentifiersByInstanceId().stream()
-					.filter(identifier -> identifier.getType().equals("DDSS-ID")).findFirst().orElse(new EDMDataproductIdentifier()).getIdentifier();
+			/*String ddss = dataproduct.getDataproductIdentifiersByInstanceId().stream()
+					.filter(identifier -> identifier.getType().equals("DDSS-ID")).findFirst().orElse(new EDMDataproductIdentifier()).getIdentifier();*/
 
 			List<String> categoryList = dataproduct.getDataproductCategoriesByInstanceId().stream()
 					.map(EDMDataproductCategory::getCategoryByCategoryId)
@@ -171,7 +171,6 @@ public class SearchGenerationJPA {
 								.uid(distribution.getUid())
 								.title(title)
 								.description(description)
-								.ddss(ddss)
 								.availableFormats(AvailableFormatsGeneration.generate(distribution))
 								.setSha256id(DigestUtils.sha256Hex(distribution.getUid()))
 								.setDataprovider(facetsDataProviders)
@@ -225,9 +224,6 @@ public class SearchGenerationJPA {
 
 		if(parameters.has("facets") && parameters.get("facets").getAsString().equals("true")) {
 			switch(parameters.get("facetstype").getAsString()) {
-			case "static":
-				FacetsGeneration.generateResponseUsingStaticJson(response, discoveryList);
-				break;
 			case "categories":
 				FacetsGeneration.generateResponseUsingCategories(response, discoveryList);
 				break;

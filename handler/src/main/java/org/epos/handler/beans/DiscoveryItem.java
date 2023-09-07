@@ -19,7 +19,6 @@ public class DiscoveryItem implements Serializable {
 	private transient Set<String> dataprovider;
 	private transient Set<String> serviceprovider;
 	private transient List<String> dataproductCategories;
-	private String ddss;
 	private String title;
 	private String description;
 	private int status = 0;
@@ -28,7 +27,7 @@ public class DiscoveryItem implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(availableFormats, ddss, description, href, id, status, statusTimestamp, title, uid);
+		return Objects.hash(availableFormats, description, href, id, status, statusTimestamp, title, uid);
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class DiscoveryItem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DiscoveryItem other = (DiscoveryItem) obj;
-		return Objects.equals(availableFormats, other.availableFormats) && Objects.equals(ddss, other.ddss)
+		return Objects.equals(availableFormats, other.availableFormats)
 				&& Objects.equals(description, other.description) && Objects.equals(href, other.href)
 				&& Objects.equals(id, other.id) && status == other.status
 				&& Objects.equals(statusTimestamp, other.statusTimestamp) && Objects.equals(title, other.title)
@@ -49,7 +48,7 @@ public class DiscoveryItem implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DiscoveryItem [href=" + href + ", id=" + id + ", uid=" + uid + ", ddss=" + ddss + ", title=" + title
+		return "DiscoveryItem [href=" + href + ", id=" + id + ", uid=" + uid + ", title=" + title
 				+ ", description=" + description + ", status=" + status + ", statusTimestamp=" + statusTimestamp
 				+ ", availableFormats=" + availableFormats + "]";
 	}
@@ -62,7 +61,6 @@ public class DiscoveryItem implements Serializable {
 		this.dataprovider = builder.dataprovider;
 		this.serviceprovider = builder.serviceprovider;
 		this.dataproductCategories = builder.dataproductCategories;
-		this.ddss = builder.ddss;
 		this.title = builder.title;
 		this.description = builder.description;
 		this.status = builder.status;
@@ -126,14 +124,6 @@ public class DiscoveryItem implements Serializable {
 		this.dataproductCategories = dataproductCategories;
 	}
 
-	public String getDdss() {
-		return ddss;
-	}
-
-	public void setDdss(String ddss) {
-		this.ddss = ddss;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -183,7 +173,6 @@ public class DiscoveryItem implements Serializable {
 		private transient Set<String> dataprovider;
 		private transient Set<String> serviceprovider;
 		private transient List<String> dataproductCategories;
-		private transient String ddss;
 		private String title;
 		private String description;
 		private int status = 0;
@@ -220,11 +209,6 @@ public class DiscoveryItem implements Serializable {
 			return this;
 		}
 
-		public DiscoveryItemBuilder ddss(String ddss) {
-			this.ddss = ddss;
-			return this;
-		}
-		
 		public DiscoveryItemBuilder title(String title) {
 			this.title = title;
 			return this;
