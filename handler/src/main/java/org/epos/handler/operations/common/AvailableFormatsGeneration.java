@@ -161,7 +161,7 @@ public class AvailableFormatsGeneration {
 		EDMWebservice webserviceByAccessService = distribution.getWebserviceByAccessService();
 		if(webserviceByAccessService !=null && webserviceByAccessService.getSupportedOperationByInstanceId() != null) {
 			for( EDMOperation op : webserviceByAccessService.getSupportedOperationByInstanceId().stream().map(EDMSupportedOperation::getOperationByInstanceOperationId).collect(Collectors.toList())){
-				if (op.getUid() != null && distribution.getDistributionAccessurlsByInstanceId() != null && distribution.getDistributionAccessurlsByInstanceId().stream().map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()).contains(op.getUid()) ) {
+				if (op.getUid() != null && op.getSoftwareapplicationOperationsByInstanceId() == null && distribution.getDistributionAccessurlsByInstanceId() != null && distribution.getDistributionAccessurlsByInstanceId().stream().map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()).contains(op.getUid()) ) {
 					for (EDMMapping map : op.getMappingsByInstanceId() != null ? op.getMappingsByInstanceId() : new ArrayList<EDMMapping>()) {
 						if (map.getProperty() != null && map.getProperty().contains("encodingFormat")) {
 							for (String pv : map.getMappingParamvaluesById().stream().map(EDMMappingParamvalue::getParamvalue).collect(Collectors.toList())) {
@@ -212,7 +212,7 @@ public class AvailableFormatsGeneration {
 							}
 						}
 					}
-					if (op.getOperationReturnsByInstanceId() != null && formats.isEmpty()) {
+					if (op.getOperationReturnsByInstanceId() != null && formats.isEmpty() && op.getSoftwareapplicationOperationsByInstanceId() == null) {
 						for (String returns : op.getOperationReturnsByInstanceId().stream().map(EDMOperationReturns::getReturns).collect(Collectors.toList())) {
 							if (returns.contains("geojson") || returns.contains("geo+json")) {
 								formats.add(new AvailableFormat.AvailableFormatBuilder()
