@@ -33,7 +33,7 @@ public class AvailableFormatsGeneration {
 		EDMWebservice webserviceByAccessService = distribution.getWebserviceByAccessService();
 		if(webserviceByAccessService !=null && webserviceByAccessService.getSupportedOperationByInstanceId() != null) {
 			for( EDMOperation op : webserviceByAccessService.getSupportedOperationByInstanceId().stream().map(EDMSupportedOperation::getOperationByInstanceOperationId).collect(Collectors.toList())){
-				
+
 				if (op.getUid() != null && distribution.getDistributionAccessurlsByInstanceId() != null && distribution.getDistributionAccessurlsByInstanceId().stream().map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()).contains(op.getUid()) ) {
 					for (EDMMapping map : op.getMappingsByInstanceId() != null ? op.getMappingsByInstanceId() : new ArrayList<EDMMapping>()) {
 						if (map.getProperty() != null && map.getProperty().contains("encodingFormat")) {
@@ -49,7 +49,7 @@ public class AvailableFormatsGeneration {
 								} else if (pv.equals("json") &&
 										(op.getTemplate().contains("service=WFS") ||
 												op.getMappingsByInstanceId().stream()
-														.anyMatch(e -> e.getVariable().equals("service") && (map.getMappingParamvaluesById().stream().map(EDMMappingParamvalue::getParamvalue).collect(Collectors.toList()).contains("WFS") || e.getDefaultvalue().contains("WFS"))))) {
+												.anyMatch(e -> e.getVariable().equals("service") && (map.getMappingParamvaluesById().stream().map(EDMMappingParamvalue::getParamvalue).collect(Collectors.toList()).contains("WFS") || e.getDefaultvalue().contains("WFS"))))) {
 									formats.add(new AvailableFormat.AvailableFormatBuilder()
 											.originalFormat(pv)
 											.format("application/epos.geo+json")
@@ -65,10 +65,11 @@ public class AvailableFormatsGeneration {
 											.label("GEOJSON (" + pv + ")")
 											.description(AvailableFormatType.ORIGINAL)
 											.build());
-								} else if ((
-										(pv.toLowerCase().contains("geojson") || pv.toLowerCase().contains("geo+json") || pv.toLowerCase().contains("geo-json")) 
-										|| (pv.toLowerCase().contains("epos.table.geo+json") || pv.toLowerCase().contains("epos.map.geo+json"))) 
-										&& op.getSoftwareapplicationOperationsByInstanceId() == null) {
+								} else if (
+										((pv.toLowerCase().contains("geojson") || pv.toLowerCase().contains("geo+json") || pv.toLowerCase().contains("geo-json")) 
+										|| (pv.toLowerCase().contains("epos.table.geo+json") || pv.toLowerCase().contains("epos.map.geo+json")))
+										&& op.getSoftwareapplicationOperationsByInstanceId().stream().map(EDMSoftwareapplicationOperation::getSoftwareapplicationByInstanceSoftwareapplicationId).collect(Collectors.toList()).isEmpty()
+									) {
 									formats.add(new AvailableFormat.AvailableFormatBuilder()
 											.originalFormat(pv)
 											.format("application/epos.geo+json")
@@ -114,14 +115,14 @@ public class AvailableFormatsGeneration {
 							if (s.getSoftwareapplicationParametersByInstanceId() != null) {
 								ArrayList<Parameter> parameterList = new ArrayList<>();
 								s.getSoftwareapplicationParametersByInstanceId().stream()
-										.map(elem -> {
-											Parameter parameter = new Parameter();
-											parameter.setEncodingFormat(elem.getEncodingformat());
-											parameter.setAction(Parameter.ActionEnum.fromValue(elem.getAction()));
-											parameter.setConformsTo(elem.getConformsto());
-											return parameter;
-										})
-										.forEach(parameterList::add);
+								.map(elem -> {
+									Parameter parameter = new Parameter();
+									parameter.setEncodingFormat(elem.getEncodingformat());
+									parameter.setAction(Parameter.ActionEnum.fromValue(elem.getAction()));
+									parameter.setConformsTo(elem.getConformsto());
+									return parameter;
+								})
+								.forEach(parameterList::add);
 
 								for (Parameter param : parameterList) {
 									if (param.getEncodingFormat().equals("application/epos.geo+json")

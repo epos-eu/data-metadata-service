@@ -23,7 +23,7 @@ public class FacetsGeneration {
 		fnt.getNodes().forEach(node -> {
 			List<DiscoveryItem> distributionsItem = new ArrayList<>();
 			for(DiscoveryItem dp : discoveryList) {
-				if(dp.getDataproductCategories() == null) System.err.println(dp.getTitle());
+				if(dp.getDataproductCategories() == null) continue;//System.err.println(dp.getTitle());
 				else {
 					if(node.getDdss()!=null && dp.getDataproductCategories().contains(node.getDdss())){
 						if(!distributionsItem.stream().anyMatch(p -> p.getId().equals(dp.getId())))
