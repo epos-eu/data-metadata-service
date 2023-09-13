@@ -59,8 +59,6 @@ public class RequestsTest {
 		}
 		//System.out.println(FacetsGeneration.generateOnlyFacetsTree(new JsonObject(), null));
 		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
-		//System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
-		//rh.handle(payloadQSearch, ServiceType.METADATA, headers);
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
 
