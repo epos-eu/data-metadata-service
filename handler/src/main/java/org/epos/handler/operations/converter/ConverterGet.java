@@ -32,7 +32,7 @@ public class ConverterGet implements Operation{
 
 		LOGGER.info("params {}" ,  superParameters.toString());
 
-		return PluginGeneration.generate(response, parameters).toString();
+		return PluginGeneration.generate(response, parameters, "plugin").toString();
 	}
 
 }

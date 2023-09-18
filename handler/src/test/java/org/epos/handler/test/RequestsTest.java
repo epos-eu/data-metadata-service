@@ -22,8 +22,10 @@ public class RequestsTest {
 	public static void main(String[] args) throws RoutingMessageHandlingException, IOException {
 		RequestHandler rh = new RequestHandler(Actor.getInstance(BuiltInActorType.DB_CONNECTOR.verbLabel()).get());
 		Map<String, Object> headers = new HashMap<String, Object>();
-		headers.put("epos_operation-type", "get");
-		headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.search");
+		headers.put("epos_operation-type", "post");
+		headers.put("epos_request-type", "test.api.distributed-processing-service.v1.processing.environment");
+		
+		//headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.search");
 		//headers.put("epos_request-type", "converter-plugins");
 		//headers.put("epos_request-type", "api.external-access-service.v1.execute");
 		//headers.put("epos_request-type", "testing.k8s-epos-deploy.new-environment.api.external-access-service.v1.execute");
@@ -33,7 +35,7 @@ public class RequestsTest {
 		String payloadSearchTemporal = "{\"schema:endDate\":\"2021-11-12T08:59:18Z\",\"schema:startDate\":\"1981-11-11T09:58:48Z\",\"facets\":\"true\"}";
 		String payloadSearchTemporalOnlyEnd = "{\"schema:endDate\":\"1896-11-12T07:49:04Z\",\"facets\":\"true\"}";
 		String payloadSearchTemporalOnlyStart = "{\"schema:startDate\":\"1872-11-20T08:58:57Z\",\"facets\":\"true\"}";
-		String payloadDetails = "{\"id\":\"8a7e49e4-f3d2-4f88-93ed-e6cdabc310ee\"}";
+		String payloadDetails = "{\"id\":\"1aaa882f-f20e-4bdb-9e4f-1c05375afbfa\"}";
 		String payloadSoftwaresPlugin = "{\"type\":\"plugins\"}";
 		String payloadResourcesPlugin = "{}";
 		String payloadSoftwaresEmpty = "{\"type\":\"plugins\", \"operation\" : \"anthropogenic_hazards/webservice/is-epos_platform/apps\"}";
@@ -58,7 +60,8 @@ public class RequestsTest {
 			e.printStackTrace();
 		}
 		//System.out.println(FacetsGeneration.generateOnlyFacetsTree(new JsonObject(), null));
-		System.out.println(rh.handle(payloadEmptySearch, ServiceType.METADATA, headers));
+		//rh.handle(payloadResourcesPlugin, ServiceType.PROCESS, headers);
+		System.out.println(rh.handle(payloadDetails, ServiceType.PROCESS, headers));
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
 

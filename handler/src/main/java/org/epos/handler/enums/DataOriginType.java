@@ -14,7 +14,8 @@ public enum DataOriginType {
 	EXTERNALACCESS("external-access-service"),
 	BACKOFFICE("backoffice"),
 	SENDER("sender"),
-	PLUGINS("converter-plugins"); // TEMPORARY
+	PROCESSING("distributed-processing-service"),
+	CONVERTERPLUGINS("converter-plugins"); // TEMPORARY
 
 	private String value;
 

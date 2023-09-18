@@ -54,7 +54,7 @@ public class ResourcesGet implements Operation{
 		case MONITORING:
 			return MonitoringGeneration.generate(response, parameters, header).toString();
 		case PLUGINS:
-			return PluginGeneration.generate(response, parameters).toString();
+			return PluginGeneration.generate(response, parameters, "plugin").toString();
 		case VALIDATIONS:
 			return new JsonObject().toString();
 		case SHOWFACILITIES:

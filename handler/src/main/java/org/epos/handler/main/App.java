@@ -73,6 +73,7 @@ public class App implements CommandLineRunner
 				.addServiceType(ServiceType.WORKSPACE, Actor.getInstance(BuiltInActorType.WORKSPACE.verbLabel()).get())
 				.addServiceType(ServiceType.EXTERNAL, Actor.getInstance(BuiltInActorType.TCS_CONNECTOR.verbLabel()).get())
 				.addServiceType(ServiceType.SENDER, Actor.getInstance(BuiltInActorType.EMAIL_SENDER.verbLabel()).get())
+				.addServiceType(ServiceType.PROCESS, Actor.getInstance(BuiltInActorType.PROCESSING.verbLabel()).get())
 				.addPlainTextPayloadTypeSupport(actor -> new RequestHandler(actor))
 				.setNumberOfPublishers(numOfPublishers)
 				.setNumberOfConsumers(numOfConsumers)

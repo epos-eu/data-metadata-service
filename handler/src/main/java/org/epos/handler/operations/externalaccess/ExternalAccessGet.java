@@ -42,7 +42,7 @@ public class ExternalAccessGet implements Operation{
 				conversionParameters.addProperty("type", "plugins");
 				conversionParameters.addProperty("operation", response.get("operationid").getAsString());
 
-				JsonArray softwareConversionList = PluginGeneration.generate(new JsonObject(), conversionParameters);
+				JsonArray softwareConversionList = PluginGeneration.generate(new JsonObject(), conversionParameters, "plugin");
 				if(!softwareConversionList.isJsonNull() && !softwareConversionList.get(0).isJsonNull()) {
 					JsonObject conversion = softwareConversionList.get(0).getAsJsonObject();
 					JsonObject singleConversion = new JsonObject();

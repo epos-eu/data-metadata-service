@@ -53,10 +53,10 @@ class HandlerTests {
 		header.put("epos_request-type", "converter-plugins");
 		    
 		HeaderParser hp = new HeaderParser(new HeaderParserBuilder(header));
-	    assertEquals(hp.getDomain(), RequestDomainType.PLUGINS);
+	    assertEquals(hp.getDomain(), RequestDomainType.CONVERTERPLUGINS);
 	    assertEquals(hp.getObject(), "CONVERTERPLUGINS");
 	    assertEquals(hp.getOperation(), OperationType.GET);
-	    assertEquals(hp.getOrigin(), DataOriginType.PLUGINS);
+	    assertEquals(hp.getOrigin(), DataOriginType.CONVERTERPLUGINS);
 	    
 	}
 	
@@ -92,4 +92,18 @@ class HandlerTests {
 	    
 	}
 
+	
+	@Test
+	void testProcessing() {
+		Map<String, Object> header = new HashMap<String, Object>();
+		header.put("epos_operation-type", "get");
+		header.put("epos_request-type", "test.api.distributed-processing-service.v1.processing.serviceslist");
+		
+		HeaderParser hp = new HeaderParser(new HeaderParserBuilder(header));
+	    assertEquals(hp.getDomain(), RequestDomainType.PROCESSING);
+	    assertEquals(hp.getObject(), "SERVICESLIST");
+	    assertEquals(hp.getOperation(), OperationType.GET);
+	    assertEquals(hp.getOrigin(), DataOriginType.PROCESSING);
+	    
+	}
 }

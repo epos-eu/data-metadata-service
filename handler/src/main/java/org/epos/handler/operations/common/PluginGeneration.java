@@ -23,7 +23,7 @@ public class PluginGeneration {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PluginGeneration.class); 
 	
-	public static JsonArray generate(JsonObject response, JsonObject parameters) {
+	public static JsonArray generate(JsonObject response, JsonObject parameters, String pluginType) {
 		List<SoftwareApplication> softwareApplicationList = new SoftwareApplicationDBAPI().getAllByState(State.PUBLISHED);
 		List<SoftwareSourceCode> softwareSourceCodeList = new SoftwareSourceCodeDBAPI().getAllByState(State.PUBLISHED);
 
@@ -32,12 +32,12 @@ public class PluginGeneration {
 		
 		for(SoftwareApplication sw : softwareApplicationList) {
 			String identifier = sw.getUid();
-			if(identifier.toLowerCase().contains("plugin")) softwareToHave.add(sw);
+			if(identifier.toLowerCase().contains(pluginType)) softwareToHave.add(sw);
 		}
 
 		for(SoftwareSourceCode sw : softwareSourceCodeList) {
 			String identifier = sw.getUid();
-			if(identifier.toLowerCase().contains("plugin")) softwareSCToHave.add(sw);
+			if(identifier.toLowerCase().contains(pluginType)) softwareSCToHave.add(sw);
 		}
 		
 

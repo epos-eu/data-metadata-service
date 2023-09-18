@@ -15,7 +15,8 @@ public enum RequestDomainType {
 	TNA("tna"),
 	INGESTOR("ingestor"),
 	CONVERTER("converter"),
-	PLUGINS("converter-plugins"),
+	CONVERTERPLUGINS("converter-plugins"),
+	PROCESSING("processing"),
 	BACKOFFICE("backoffice");
 	
 	private String value;

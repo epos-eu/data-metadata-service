@@ -10,6 +10,8 @@ import org.epos.handler.HeaderParser.HeaderParserBuilder;
 import org.epos.handler.operations.converter.ConverterGet;
 import org.epos.handler.operations.externalaccess.ExternalAccessGet;
 import org.epos.handler.operations.ingestor.IngestorPost;
+import org.epos.handler.operations.processing.ProcessingGet;
+import org.epos.handler.operations.processing.ProcessingPost;
 import org.epos.handler.operations.resources.ResourcesGet;
 import org.epos.handler.operations.sender.SenderGet;
 import org.epos.router_framework.domain.Actor;
@@ -73,6 +75,8 @@ public class RequestHandler extends PlainTextRelayRouterHandler {
 		switch(headerParser.getOperation()) {
 		case DELETE:
 			switch(headerParser.getOrigin()) {
+			case PROCESSING:
+				return new ProcessingPost().operationAction(headerParser, headers, payload, response);
 			default:
 				break;
 			}
@@ -81,9 +85,12 @@ public class RequestHandler extends PlainTextRelayRouterHandler {
 			switch(headerParser.getOrigin()) {
 			case CONVERTER:
 				break;
-			case PLUGINS:
+			case CONVERTERPLUGINS:
 				this.setOverriddenNextActor(Actor.getInstance(BuiltInActorType.CONVERTER));
 				return new ConverterGet().operationAction(headerParser, headers, payload, response);
+			case PROCESSING:
+				this.setOverriddenNextActor(Actor.getInstance(BuiltInActorType.PROCESSING));
+				return new ProcessingGet().operationAction(headerParser, headers, payload, response);
 			case EXTERNALACCESS:
 				return new ExternalAccessGet().operationAction(headerParser, headers, payload, response);
 			case INGESTOR:
@@ -102,12 +109,16 @@ public class RequestHandler extends PlainTextRelayRouterHandler {
 				return new IngestorPost().operationAction(headerParser, headers, payload, response);
 			case SENDER:
 				return new SenderGet().operationAction(headerParser, headers, payload, response);
+			case PROCESSING:
+				return new ProcessingPost().operationAction(headerParser, headers, payload, response);
 			default:
 				break;
 			}
 			break;
 		case PUT:
 			switch(headerParser.getOrigin()) {
+			case PROCESSING:
+				return new ProcessingPost().operationAction(headerParser, headers, payload, response);
 			default:
 				break;
 
