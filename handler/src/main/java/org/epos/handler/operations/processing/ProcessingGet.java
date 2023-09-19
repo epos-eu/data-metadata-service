@@ -18,6 +18,8 @@ import org.epos.handler.dbapi.model.EDMDistribution;
 import org.epos.handler.dbapi.model.EDMDistributionDescription;
 import org.epos.handler.dbapi.model.EDMDistributionTitle;
 import org.epos.handler.dbapi.model.EDMIspartofDataproduct;
+import org.epos.handler.dbapi.model.EDMWebservice;
+import org.epos.handler.dbapi.model.EDMWebserviceRelation;
 import org.epos.handler.dbapi.service.DBService;
 import org.epos.handler.enums.APIActionType;
 import org.epos.handler.enums.DataOriginType;
@@ -53,30 +55,27 @@ public class ProcessingGet implements Operation{
 		switch(type) {
 		case SERVICESLIST:
 			EntityManager em = new DBService().getEntityManager();
-			List<EDMDataproduct> dataproductList = getFromDB(em, EDMDataproduct.class, "dataproduct.findAllByState", "STATE", "PUBLISHED");
+			List<EDMWebservice> webservicesList = getFromDB(em, EDMWebservice.class, "webservice.findAllByState", "STATE", "PUBLISHED");
 			List<CategoryScheme> categorySchemesList = new CategorySchemeDBAPI().getAll().stream()
 					.filter(e->e.getUid().contains("category:icsdprocessing"))
 					.collect(Collectors.toList());
 
 			List<ProcessingServiceSimple> webservices = new ArrayList<ProcessingServiceSimple>();
-			dataproductList.forEach(dp -> {
-				dp.getDataproductCategoriesByInstanceId().forEach(cat->{
+			
+			webservicesList.forEach(ws->{
+				ws.getWebserviceCategoriesByInstanceId().forEach(cat->{
 					categorySchemesList.forEach(sch ->{
 						if(sch.getInstanceId().equals(cat.getCategoryByCategoryId().getScheme())) {
-							dp.getIsDistributionsByInstanceId().forEach(distr ->{
-								EDMDistribution distribution = distr.getDistributionByInstanceDistributionId();
-								ProcessingServiceSimple los = new ProcessingServiceSimple();
-								los.setId(distribution.getMetaId());
-								los.setName(distribution.getDistributionTitlesByInstanceId().stream().map(EDMDistributionTitle::getTitle).findFirst().get());
-								los.setDescription(distribution.getDistributionDescriptionsByInstanceId().stream().map(EDMDistributionDescription::getDescription).findFirst().get());
-								los.setDependencyServices(dp.getIspartofDataproductsByInstanceId().stream().map(EDMIspartofDataproduct::getDataproductByInstanceDataproduct1Id).map(EDMDataproduct::getMetaId).collect(Collectors.toList()));
-								webservices.add(los);
-							});
+							ProcessingServiceSimple los = new ProcessingServiceSimple();
+							los.setId(ws.getMetaId());
+							los.setName(ws.getName());
+							los.setDescription(ws.getDescription());
+							los.setDependencyServices(ws.getWebserviceRelationByInstanceId().stream().map(EDMWebserviceRelation::getWebserviceByInstanceWebserviceId_0).map(EDMWebservice::getMetaId).collect(Collectors.toList()));
+							webservices.add(los);
 						}
 					});
 				});
 			});
-
 			return gson.toJsonTree(webservices).toString();
 		default:
 			return "[]";

@@ -35,7 +35,7 @@ public class RequestsTest {
 		String payloadSearchTemporal = "{\"schema:endDate\":\"2021-11-12T08:59:18Z\",\"schema:startDate\":\"1981-11-11T09:58:48Z\",\"facets\":\"true\"}";
 		String payloadSearchTemporalOnlyEnd = "{\"schema:endDate\":\"1896-11-12T07:49:04Z\",\"facets\":\"true\"}";
 		String payloadSearchTemporalOnlyStart = "{\"schema:startDate\":\"1872-11-20T08:58:57Z\",\"facets\":\"true\"}";
-		String payloadDetails = "{\"id\":\"1aaa882f-f20e-4bdb-9e4f-1c05375afbfa\"}";
+		String payloadDetails = "{\"id\":\"9b54ef14-bed4-4180-b5f4-fb89feb76ab9\"}";
 		String payloadSoftwaresPlugin = "{\"type\":\"plugins\"}";
 		String payloadResourcesPlugin = "{}";
 		String payloadSoftwaresEmpty = "{\"type\":\"plugins\", \"operation\" : \"anthropogenic_hazards/webservice/is-epos_platform/apps\"}";

@@ -4,7 +4,7 @@ package org.epos.handler.beans;
 import java.io.Serializable;
 import java.util.*;
 
-public class DistributionProcessing implements Serializable {
+public class WebserviceProcessing implements Serializable {
 
 	/**
 	 * 
@@ -52,7 +52,7 @@ public class DistributionProcessing implements Serializable {
 	private HashMap<String, String> methodEndpoint;
 	private HashMap<String,  List<ServiceParameter>> methodServiceParameters;
 	
-	public DistributionProcessing() {
+	public WebserviceProcessing() {
 		keywords = new ArrayList<>();
 		dataProvider = new ArrayList<>();
 		internalID = new ArrayList<>();
@@ -70,7 +70,7 @@ public class DistributionProcessing implements Serializable {
 		methodServiceParameters = new HashMap<String, List<ServiceParameter>>();
 	}
 
-	public DistributionProcessing(String productid, String distributionid, String operationid, String href, String id, String uid,
+	public WebserviceProcessing(String productid, String distributionid, String operationid, String href, String id, String uid,
 						String type, String title, String description, String license, String downloadURL, List<String> keywords,
 						List<DataServiceProvider> dataProvider, String frequencyUpdate, List<String> internalID, List<String> DOI, SpatialInfo spatial,
 						TemporalCoverage temporalCoverage, List<AvailableFormat> availableFormats, String serviceName,
@@ -389,7 +389,7 @@ public class DistributionProcessing implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DistributionProcessing other = (DistributionProcessing) obj;
+		WebserviceProcessing other = (WebserviceProcessing) obj;
 		if (DOI == null) {
 			if (other.DOI != null)
 				return false;

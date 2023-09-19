@@ -48,157 +48,76 @@ public class ProcessingDetailsItemGenerationJPA {
 
 		EntityManager em = new DBService().getEntityManager();
 
-		List<EDMDistribution> distributionSelectedList = getFromDB(em, EDMDistribution.class,
-				"distribution.findAllByMetaId",
+		List<EDMWebservice> webservicesList = getFromDB(em, EDMWebservice.class,
+				"webservice.findAllByMetaId",
 				"METAID", parameters.get("id").getAsString());
 
-		if (distributionSelectedList.stream().noneMatch(distrSelected -> distrSelected.getState().equals("PUBLISHED")))
+		if (webservicesList.stream().noneMatch(webserviceSelected -> webserviceSelected.getState().equals("PUBLISHED")))
 			return new JsonObject();
 
 
-		EDMDistribution distributionSelected = distributionSelectedList.stream().filter(distrSelected -> distrSelected.getState().equals("PUBLISHED")).collect(Collectors.toList()).get(0);
+		EDMWebservice ws = webservicesList.stream().filter(webserviceSelected -> webserviceSelected.getState().equals("PUBLISHED")).collect(Collectors.toList()).get(0);
 
-		if (distributionSelected == null) return new JsonObject();
+		if (ws == null) return new JsonObject();
 
-		EDMWebservice ws = distributionSelected.getWebserviceByAccessService() != null && distributionSelected.getWebserviceByAccessService().getState().equals(State.PUBLISHED.toString()) ?
-				distributionSelected.getWebserviceByAccessService() : null;
-		if (ws == null && distributionSelected.getAccessService() != null) return new JsonObject();
+		List<EDMSupportedOperation> supportedoperations = ws.getSupportedOperationByInstanceId().stream().collect(Collectors.toList());
 
-		List<EDMOperation> operations;
-		if (distributionSelected.getDistributionAccessurlsByInstanceId() != null) {
+		System.out.println(supportedoperations);
+		
+		
+		
+		List<EDMOperation> operations = new ArrayList<EDMOperation>();
+		
+		if(supportedoperations!=null && supportedoperations.size()>0) {
+			supportedoperations.forEach(so -> operations.add(so.getOperationByInstanceOperationId()));
+		}
+		
+		/*if (ws.getSupportedOperationByInstanceId() != null) {
 			operations = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
-					"LIST", distributionSelected.getDistributionAccessurlsByInstanceId().stream()
-					.map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()),
+					"LIST", ws.getSupportedOperationByInstanceId(),
 					"STATE", State.PUBLISHED.toString());
 		} else {
 			return new JsonObject();
 		}
-		if (operations == null && distributionSelected.getAccessService() != null) return new JsonObject();
+		if (operations == null && ws.getSupportedOperationByInstanceId() != null) return new JsonObject();*/
+		
+
+		System.out.println(operations);
+		
 
 
-		org.epos.handler.beans.DistributionProcessing distribution = new org.epos.handler.beans.DistributionProcessing();
+		org.epos.handler.beans.WebserviceProcessing outputWebservice = new org.epos.handler.beans.WebserviceProcessing();
 
-		if (distributionSelected.getDistributionTitlesByInstanceId() != null) {
-			distribution.setTitle(
-					Optional.of(
-							distributionSelected.getDistributionTitlesByInstanceId().stream()
-							.map(EDMDistributionTitle::getTitle).collect(Collectors.joining("."))
-							).orElse(null)
-					);
-		}
+		if (ws.getName() != null) outputWebservice.setTitle(ws.getName());
 
-		if (distributionSelected.getType() != null) {
-			String[] type = distributionSelected.getType().split("\\/");
-			distribution.setType(type[type.length - 1]);
-		}
+		if (ws.getDescription() != null) outputWebservice.setDescription(ws.getDescription());
 
-		if (distributionSelected.getDistributionDescriptionsByInstanceId() != null) {
-			distribution.setDescription(
-					Optional.of(
-							distributionSelected.getDistributionDescriptionsByInstanceId().stream()
-							.map(EDMDistributionDescription::getDescription).collect(Collectors.joining("."))
-							).orElse(null)
-					);
-		}
-
-		distribution.setId(Optional.ofNullable(distributionSelected.getMetaId()).orElse(null));
-		distribution.setUid(Optional.ofNullable(distributionSelected.getUid()).orElse(null));
-
-		if (distributionSelected.getDistributionDownloadurlsByInstanceId() != null) {
-			distribution.setDownloadURL(
-					Optional.of(
-							distributionSelected.getDistributionDownloadurlsByInstanceId().stream()
-							.map(EDMDistributionDownloadurl::getDownloadurl).collect(Collectors.joining("."))
-							).orElse(null)
-					);
-		}
-
-		if (distributionSelected.getDistributionAccessurlsByInstanceId() != null) {
-			/*distribution.setEndpoint(
-					Optional.of(
-							distributionSelected.getDistributionAccessurlsByInstanceId().stream()
-							.map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.joining("."))
-							).orElse(null)
-					);*/
-		}
-
-		distribution.setLicense(Optional.ofNullable(distributionSelected.getLicense()).orElse(null));
-
-		// DATASET INFO
-		ArrayList<String> internalIDs = new ArrayList<>();
-		List<String> doi = new ArrayList<>();
-
-		distribution.setHref(EnvironmentVariables.API_HOST + API_PATH_DETAILS + distributionSelected.getMetaId());
-		distribution.setInternalID(internalIDs);
-
-		// WEBSERVICE INFO
-		if (ws != null) {
-			distribution.setServiceDescription(Optional.ofNullable(ws.getDescription()).orElse(null));
-
-
-
-			distribution.setServiceName(Optional.ofNullable(ws.getName()).orElse(null));
-
-			if (ws.getEdmEntityIdByProvider() != null) {
-				List<DataServiceProvider> serviceProviders = getProviders(List.of(ws.getEdmEntityIdByProvider()));
-				if (!serviceProviders.isEmpty()){
-					distribution.setServiceProvider(serviceProviders.get(0));
-				}
+		outputWebservice.setId(ws.getMetaId());
+		outputWebservice.setUid(ws.getUid());
+		outputWebservice.setLicense(ws.getLicense());
+		outputWebservice.setServiceDescription(Optional.ofNullable(ws.getDescription()).orElse(null));
+		outputWebservice.setServiceName(Optional.ofNullable(ws.getName()).orElse(null));
+		if (ws.getEdmEntityIdByProvider() != null) {
+			List<DataServiceProvider> serviceProviders = getProviders(List.of(ws.getEdmEntityIdByProvider()));
+			if (!serviceProviders.isEmpty()){
+				outputWebservice.setServiceProvider(serviceProviders.get(0));
 			}
-
-			if (ws.getWebserviceSpatialsByInstanceId() != null) {
-				for (EDMWebserviceSpatial s : ws.getWebserviceSpatialsByInstanceId())
-					distribution.getServiceSpatial().addPaths(SpatialInformation.doSpatial(s.getLocation()), SpatialInformation.checkPoint(s.getLocation()));
-			}
-
-			TemporalCoverage tcws = new TemporalCoverage();
-			if (ws.getWebserviceTemporalsByInstanceId() != null && ws.getWebserviceTemporalsByInstanceId().size() > 0) {
-				Timestamp startdate = new ArrayList<>(ws.getWebserviceTemporalsByInstanceId()).get(0).getStartdate();
-				Timestamp enddate = new ArrayList<>(ws.getWebserviceTemporalsByInstanceId()).get(0).getEnddate();
-
-				String startDate;
-				String endDate;
-
-				if (startdate != null) {
-					startDate = startdate.toString().replace(".0", "Z").replace(" ", "T");
-					if (!startDate.contains("Z")) startDate = startDate + "Z";
-				} else startDate = null;
-				if (enddate != null) {
-					endDate = enddate.toString().replace(".0", "Z").replace(" ", "T");
-					if (!endDate.contains("Z")) endDate = endDate + "Z";
-				} else endDate = null;
-
-				tcws.setStartDate(startDate);
-				tcws.setEndDate(endDate);
-			}
-			distribution.setServiceTemporalCoverage(tcws);
-
-			if (ws.getWebserviceCategoriesByInstanceId() != null) {
-				distribution.setServiceType(Optional.of(ws.getWebserviceCategoriesByInstanceId().stream()
-						.map(EDMWebserviceCategory::getCategoryByCategoryId)
-						.map(EDMCategory::getName).collect(Collectors.toList())).orElse(null));
-			}
-
 		}
-
-		// CONTACT POINTS
-
-		if(ws!=null && !ws.getContactpointWebservicesByInstanceId().isEmpty()) {
-			distribution.getAvailableContactPoints()
-			.add(new AvailableContactPointsBuilder()
-					.href(EnvironmentVariables.API_HOST + EMAIL_SENDER + ws.getInstanceId()+"&contactType="+ProviderType.SERVICEPROVIDERS)
-					.type(ProviderType.SERVICEPROVIDERS).build());
+		if (ws.getWebserviceCategoriesByInstanceId() != null) {
+			outputWebservice.setServiceType(Optional.of(ws.getWebserviceCategoriesByInstanceId().stream()
+					.map(EDMWebserviceCategory::getCategoryByCategoryId)
+					.map(EDMCategory::getName).collect(Collectors.toList())).orElse(null));
 		}
-
 		// OPERATION AND PARAMETERS
 		if (operations!=null && operations.size()>0) {
 			for(EDMOperation op : operations) {
 				
+				System.out.println(op);
+				
 				String method = op.getMethod();
 				
-				
-				distribution.getMethodEndpoint().put(method, op.getTemplate());
-				distribution.getMethodOperationId().put(method, op.getUid());
+				outputWebservice.getMethodEndpoint().put(method, op.getTemplate());
+				outputWebservice.getMethodOperationId().put(method, op.getUid());
 				if (op.getMappingsByInstanceId() != null) {
 					for (EDMMapping mp : op.getMappingsByInstanceId()) {
 						ServiceParameter sp = new ServiceParameter();
@@ -259,8 +178,8 @@ public class ProcessingDetailsItemGenerationJPA {
 						sp.setVersion(null);
 						sp.setReadOnlyValue(mp.getReadOnlyValue());
 						sp.setMultipleValue(mp.getMultipleValues());
-						distribution.getMethodServiceParameters().put(method, new ArrayList<ServiceParameter>());
-						distribution.getMethodServiceParameters().get(method).add(sp);
+						outputWebservice.getMethodServiceParameters().put(method, new ArrayList<ServiceParameter>());
+						outputWebservice.getMethodServiceParameters().get(method).add(sp);
 					}
 				}
 			}
@@ -268,20 +187,9 @@ public class ProcessingDetailsItemGenerationJPA {
 
 		em.close();
 
-		return gson.toJsonTree(distribution).getAsJsonObject();
+		return gson.toJsonTree(outputWebservice).getAsJsonObject();
 	}
 
-	private static void cleanFacetsCategoriesPaths(JsonObject facetsTempResponse) {
-		if(facetsTempResponse.has("children")) {
-			for(JsonElement children : facetsTempResponse.get("children").getAsJsonArray()) {
-				cleanFacetsCategoriesPaths(children.getAsJsonObject());
-			}
-		}
-		if(facetsTempResponse.has("distributions")) {
-			facetsTempResponse.remove("distributions");
-		}
-
-	}
 
 	private static List<DataServiceProvider> getProviders(List<EDMEdmEntityId> organizationsCollection) {
 		List<EDMOrganization> organizations = new ArrayList<>();
