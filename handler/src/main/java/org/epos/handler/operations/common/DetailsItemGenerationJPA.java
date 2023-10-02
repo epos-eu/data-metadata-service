@@ -84,10 +84,10 @@ public class DetailsItemGenerationJPA {
 		if (ws == null && distributionSelected.getAccessService() != null) return new JsonObject();
 
 		EDMOperation op;
-		if (distributionSelected.getDistributionAccessurlsByInstanceId() != null) {
+		if (distributionSelected.getAccessURLByInstanceId() != null) {
 			op = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
-					"LIST", distributionSelected.getDistributionAccessurlsByInstanceId().stream()
-					.map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()),
+					"LIST", distributionSelected.getAccessURLByInstanceId().stream()
+					.map(EDMDistributionAccessURL::getInstanceOperationId).collect(Collectors.toList()),
 					"STATE", State.PUBLISHED.toString())
 					.stream().findFirst().orElse(null);
 		} else {
@@ -133,11 +133,11 @@ public class DetailsItemGenerationJPA {
 					);
 		}
 
-		if (distributionSelected.getDistributionAccessurlsByInstanceId() != null) {
+		if (distributionSelected.getAccessURLByInstanceId() != null) {
 			distribution.setEndpoint(
 					Optional.of(
-							distributionSelected.getDistributionAccessurlsByInstanceId().stream()
-							.map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.joining("."))
+							distributionSelected.getAccessURLByInstanceId().stream()
+							.map(EDMDistributionAccessURL::getInstanceOperationId).collect(Collectors.joining("."))
 							).orElse(null)
 					);
 		}

@@ -34,7 +34,7 @@ public class AvailableFormatsGeneration {
 		if(webserviceByAccessService !=null && webserviceByAccessService.getSupportedOperationByInstanceId() != null) {
 			for( EDMOperation op : webserviceByAccessService.getSupportedOperationByInstanceId().stream().map(EDMSupportedOperation::getOperationByInstanceOperationId).collect(Collectors.toList())){
 
-				if (op.getUid() != null && distribution.getDistributionAccessurlsByInstanceId() != null && distribution.getDistributionAccessurlsByInstanceId().stream().map(EDMDistributionAccessurl::getAccessurl).collect(Collectors.toList()).contains(op.getUid()) ) {
+				if (op.getUid() != null && distribution.getAccessURLByInstanceId() != null && distribution.getAccessURLByInstanceId().stream().map(EDMDistributionAccessURL::getInstanceOperationId).collect(Collectors.toList()).contains(op.getUid()) ) {
 					for (EDMMapping map : op.getMappingsByInstanceId() != null ? op.getMappingsByInstanceId() : new ArrayList<EDMMapping>()) {
 						if (map.getProperty() != null && map.getProperty().contains("encodingFormat")) {
 							for (String pv : map.getMappingParamvaluesById().stream().map(EDMMappingParamvalue::getParamvalue).collect(Collectors.toList())) {
@@ -153,13 +153,13 @@ public class AvailableFormatsGeneration {
 				}
 			}
 		}
-		if(distribution.getDistributionAccessurlsByInstanceId()!=null && webserviceByAccessService ==null && distribution.getDistributionAccessurlsByInstanceId().size() > 0) {
+		if(distribution.getAccessURLByInstanceId()!=null && webserviceByAccessService ==null && distribution.getAccessURLByInstanceId().size() > 0) {
 			String[] uri = distribution.getFormat().split("\\/");
 			String format = uri[uri.length-1];
 			formats.add(new AvailableFormat.AvailableFormatBuilder()
 					.originalFormat(format)
 					.format(format)
-					.href(new ArrayList<>(distribution.getDistributionAccessurlsByInstanceId()).get(0).getAccessurl())
+					.href(new ArrayList<>(distribution.getAccessURLByInstanceId()).get(0).getInstanceOperationId())
 					.label(format.toUpperCase())
 					.description(AvailableFormatType.ORIGINAL)
 					.build());
