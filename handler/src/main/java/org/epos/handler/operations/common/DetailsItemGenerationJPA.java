@@ -87,7 +87,7 @@ public class DetailsItemGenerationJPA {
 		if (distributionSelected.getAccessURLByInstanceId() != null) {
 			op = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
 					"LIST", distributionSelected.getAccessURLByInstanceId().stream()
-					.map(EDMDistributionAccessURL::getInstanceOperationId).collect(Collectors.toList()),
+					.map(EDMDistributionAccessURL::getOperationByInstanceOperationId).collect(Collectors.toList()),
 					"STATE", State.PUBLISHED.toString())
 					.stream().findFirst().orElse(null);
 		} else {
@@ -137,7 +137,7 @@ public class DetailsItemGenerationJPA {
 			distribution.setEndpoint(
 					Optional.of(
 							distributionSelected.getAccessURLByInstanceId().stream()
-							.map(EDMDistributionAccessURL::getInstanceOperationId).collect(Collectors.joining("."))
+							.map(EDMDistributionAccessURL::getOperationByInstanceOperationId).map(EDMOperation::getTemplate).collect(Collectors.joining("."))
 							).orElse(null)
 					);
 		}
