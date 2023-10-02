@@ -85,14 +85,17 @@ public class DetailsItemGenerationJPA {
 
 		EDMOperation op;
 		if (distributionSelected.getAccessURLByInstanceId() != null) {
-			op = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
+			/*op = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
 					"LIST", distributionSelected.getAccessURLByInstanceId().stream()
 					.map(EDMDistributionAccessURL::getOperationByInstanceOperationId).collect(Collectors.toList()),
 					"STATE", State.PUBLISHED.toString())
-					.stream().findFirst().orElse(null);
+					.stream().findFirst().orElse(null);*/
+			op = distributionSelected.getAccessURLByInstanceId().stream()
+			.map(EDMDistributionAccessURL::getOperationByInstanceOperationId).collect(Collectors.toList()).get(0);
 		} else {
 			return new JsonObject();
 		}
+		
 		if (op == null && distributionSelected.getAccessService() != null) return new JsonObject();
 
 
