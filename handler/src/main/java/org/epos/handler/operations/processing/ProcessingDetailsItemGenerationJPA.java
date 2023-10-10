@@ -1,20 +1,15 @@
 package org.epos.handler.operations.processing;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.epos.eposdatamodel.State;
 import org.epos.handler.HeaderParser;
 import org.epos.handler.beans.DataServiceProvider;
+import org.epos.handler.beans.ProcessingServiceSimple;
 import org.epos.handler.beans.ServiceParameter;
-import org.epos.handler.beans.SpatialInformation;
-import org.epos.handler.beans.TemporalCoverage;
-import org.epos.handler.beans.AvailableContactPoints.AvailableContactPointsBuilder;
-import org.epos.handler.constants.EnvironmentVariables;
 import org.epos.handler.dbapi.model.*;
 import org.epos.handler.dbapi.service.DBService;
 import org.epos.handler.enums.DataOriginType;
-import org.epos.handler.enums.ProviderType;
 import org.epos.handler.support.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +20,6 @@ import javax.persistence.EntityManager;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,9 +30,6 @@ import static org.epos.handler.support.Utils.gson;
 public class ProcessingDetailsItemGenerationJPA {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProcessingDetailsItemGenerationJPA.class);
-
-	private static final String API_PATH_DETAILS = EnvironmentVariables.API_CONTEXT + "/resources/details?id=";
-	private static final String EMAIL_SENDER = EnvironmentVariables.API_CONTEXT + "/sender/send-email?id=";
 
 	public static JsonObject generate(JsonObject response, @NonNull JsonObject parameters, HeaderParser header) {
 
@@ -63,15 +54,15 @@ public class ProcessingDetailsItemGenerationJPA {
 		List<EDMSupportedOperation> supportedoperations = ws.getSupportedOperationByInstanceId().stream().collect(Collectors.toList());
 
 		System.out.println(supportedoperations);
-		
-		
-		
+
+
+
 		List<EDMOperation> operations = new ArrayList<EDMOperation>();
-		
+
 		if(supportedoperations!=null && supportedoperations.size()>0) {
 			supportedoperations.forEach(so -> operations.add(so.getOperationByInstanceOperationId()));
 		}
-		
+
 		/*if (ws.getSupportedOperationByInstanceId() != null) {
 			operations = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
 					"LIST", ws.getSupportedOperationByInstanceId(),
@@ -80,10 +71,10 @@ public class ProcessingDetailsItemGenerationJPA {
 			return new JsonObject();
 		}
 		if (operations == null && ws.getSupportedOperationByInstanceId() != null) return new JsonObject();*/
-		
+
 
 		System.out.println(operations);
-		
+
 
 
 		org.epos.handler.beans.WebserviceProcessing outputWebservice = new org.epos.handler.beans.WebserviceProcessing();
@@ -108,14 +99,16 @@ public class ProcessingDetailsItemGenerationJPA {
 					.map(EDMWebserviceCategory::getCategoryByCategoryId)
 					.map(EDMCategory::getName).collect(Collectors.toList())).orElse(null));
 		}
+
+		outputWebservice.setDependecyServices(ws.getWebserviceRelationByInstanceId().stream().map(EDMWebserviceRelation::getWebserviceByInstanceWebserviceId_0).map(EDMWebservice::getMetaId).collect(Collectors.toList()));
 		// OPERATION AND PARAMETERS
 		if (operations!=null && operations.size()>0) {
 			for(EDMOperation op : operations) {
-				
+
 				System.out.println(op);
-				
+
 				String method = op.getMethod();
-				
+
 				outputWebservice.getMethodEndpoint().put(method, op.getTemplate());
 				outputWebservice.getMethodOperationId().put(method, op.getUid());
 				if (op.getMappingsByInstanceId() != null) {
@@ -178,8 +171,12 @@ public class ProcessingDetailsItemGenerationJPA {
 						sp.setVersion(null);
 						sp.setReadOnlyValue(mp.getReadOnlyValue());
 						sp.setMultipleValue(mp.getMultipleValues());
-						outputWebservice.getMethodServiceParameters().put(method, new ArrayList<ServiceParameter>());
-						outputWebservice.getMethodServiceParameters().get(method).add(sp);
+						if(outputWebservice.getMethodServiceParameters().containsKey(method)){
+							outputWebservice.getMethodServiceParameters().get(method).add(sp);
+						}else {
+							outputWebservice.getMethodServiceParameters().put(method, new ArrayList<ServiceParameter>());
+							outputWebservice.getMethodServiceParameters().get(method).add(sp);
+						}
 					}
 				}
 			}

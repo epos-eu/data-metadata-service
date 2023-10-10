@@ -36,6 +36,7 @@ public class WebserviceProcessing implements Serializable {
 	private String hasQualityAnnotation;
 	private List<AvailableFormat> availableFormats;
 	private List<AvailableContactPoints> availableContactPoints;
+	private List<String> dependecyServices;
 	
 	// WEBSERVICE
 	
@@ -65,6 +66,7 @@ public class WebserviceProcessing implements Serializable {
 		serviceTemporalCoverage = new TemporalCoverage();
 		scienceDomain = new ArrayList<>();
 		serviceType = new ArrayList<>();
+		dependecyServices = new ArrayList<>();
 		methodOperationId = new HashMap<String, String>();
 		methodEndpoint = new HashMap<String, String>();
 		methodServiceParameters = new HashMap<String, List<ServiceParameter>>();
@@ -328,6 +330,14 @@ public class WebserviceProcessing implements Serializable {
 
 	public void setHasQualityAnnotation(String hasQualityAnnotation) {
 		this.hasQualityAnnotation = hasQualityAnnotation;
+	}
+
+	public List<String> getDependecyServices() {
+		return dependecyServices;
+	}
+
+	public void setDependecyServices(List<String> dependecyServices) {
+		this.dependecyServices = dependecyServices;
 	}
 
 	public HashMap<String, String> getMethodOperationId() {

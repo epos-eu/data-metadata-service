@@ -13,12 +13,8 @@ import javax.persistence.EntityManager;
 import org.epos.eposdatamodel.CategoryScheme;
 import org.epos.handler.HeaderParser;
 import org.epos.handler.dbapi.dbapiimplementation.CategorySchemeDBAPI;
-import org.epos.handler.dbapi.model.EDMDataproduct;
-import org.epos.handler.dbapi.model.EDMDistribution;
-import org.epos.handler.dbapi.model.EDMDistributionDescription;
-import org.epos.handler.dbapi.model.EDMDistributionTitle;
-import org.epos.handler.dbapi.model.EDMIspartofDataproduct;
 import org.epos.handler.dbapi.model.EDMWebservice;
+import org.epos.handler.dbapi.model.EDMWebserviceCategory;
 import org.epos.handler.dbapi.model.EDMWebserviceRelation;
 import org.epos.handler.dbapi.service.DBService;
 import org.epos.handler.enums.APIActionType;
@@ -61,20 +57,28 @@ public class ProcessingGet implements Operation{
 					.collect(Collectors.toList());
 
 			List<ProcessingServiceSimple> webservices = new ArrayList<ProcessingServiceSimple>();
-			
+
 			webservicesList.forEach(ws->{
-				ws.getWebserviceCategoriesByInstanceId().forEach(cat->{
-					categorySchemesList.forEach(sch ->{
-						if(sch.getInstanceId().equals(cat.getCategoryByCategoryId().getScheme())) {
-							ProcessingServiceSimple los = new ProcessingServiceSimple();
-							los.setId(ws.getMetaId());
-							los.setName(ws.getName());
-							los.setDescription(ws.getDescription());
-							los.setDependencyServices(ws.getWebserviceRelationByInstanceId().stream().map(EDMWebserviceRelation::getWebserviceByInstanceWebserviceId_0).map(EDMWebservice::getMetaId).collect(Collectors.toList()));
-							webservices.add(los);
-						}
+				boolean isHidden = false;
+				for( EDMWebserviceCategory cat : ws.getWebserviceCategoriesByInstanceId()) {
+					if(cat.getCategoryByCategoryId().getUid().equals("_system_hidden")) 
+						isHidden = true;
+				}
+				if(!isHidden) {
+					ws.getWebserviceCategoriesByInstanceId().forEach(cat->{
+						System.out.println(cat.getCategoryByCategoryId().getUid());
+						categorySchemesList.forEach(sch ->{
+							if(sch.getInstanceId().equals(cat.getCategoryByCategoryId().getScheme())) {
+								ProcessingServiceSimple los = new ProcessingServiceSimple();
+								los.setId(ws.getMetaId());
+								los.setName(ws.getName());
+								los.setDescription(ws.getDescription());
+								los.setDependencyServices(ws.getWebserviceRelationByInstanceId().stream().map(EDMWebserviceRelation::getWebserviceByInstanceWebserviceId_0).map(EDMWebservice::getMetaId).collect(Collectors.toList()));
+								webservices.add(los);
+							}
+						});
 					});
-				});
+				}
 			});
 			return gson.toJsonTree(webservices).toString();
 		default:
