@@ -12,7 +12,7 @@ public enum APIActionType {
 	MONITORING("monitoring"),
 	PLUGINS("plugins"),
 	SENDEMAIL("send-email"),
-	SERVICESLIST("serviceslist"),
+	SERVICESLIST("search"),
 	VALIDATIONS("validations"),
 	CONTACTPOINT("contactpoints"),
 	DATAPRODUCT("dataproducts"),
