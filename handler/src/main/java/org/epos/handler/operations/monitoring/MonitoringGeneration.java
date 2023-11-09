@@ -76,8 +76,6 @@ public class MonitoringGeneration {
 			}
 			
 			mb.setName(title);
-			//ORIGINAL URL
-			//mb.setOriginalURL(EnvironmentVariables.API_HOST+ API_PATH_MONITORING_EXECUTE + dx.getMetaId()+"&useDefaults=true");
 
 			JsonObject params = new JsonObject();
 			params.addProperty("id", dx.getMetaId());
@@ -91,16 +89,10 @@ public class MonitoringGeneration {
 			distributionResponse.remove("categories");
 
 			Distribution distribution = gson.fromJson(distributionResponse, Distribution.class);
-
-			System.out.println(distribution);
 			
 			HashMap<String, Object> parametersMap = new HashMap<>();
 
 			if(distribution!=null) {
-				
-				System.out.println("ADDING DISTRIBUTION");
-				System.out.println(distribution.getEndpoint());
-				System.out.println(distribution.getServiceEndpoint());
 
 				if(distribution.getParameters()!=null) {
 					distribution.getParameters().forEach(p -> {
@@ -183,8 +175,6 @@ public class MonitoringGeneration {
 					monitoringList.add(mb);
 			}
 		}
-
-		System.out.println(monitoringList);
 		return gson.toJsonTree(monitoringList).getAsJsonArray();
 	}
 
