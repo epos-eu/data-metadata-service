@@ -540,6 +540,22 @@ public class Distribution implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Distribution [operationid=" + operationid + ", href=" + href + ", categories=" + categories + ", id="
+				+ id + ", uid=" + uid + ", type=" + type + ", title=" + title + ", description=" + description
+				+ ", license=" + license + ", downloadURL=" + downloadURL + ", keywords=" + keywords + ", dataProvider="
+				+ dataProvider + ", frequencyUpdate=" + frequencyUpdate + ", internalID=" + internalID + ", DOI=" + DOI
+				+ ", spatial=" + spatial + ", temporalCoverage=" + temporalCoverage + ", scienceDomain=" + scienceDomain
+				+ ", hasQualityAnnotation=" + hasQualityAnnotation + ", availableFormats=" + availableFormats
+				+ ", availableContactPoints=" + availableContactPoints + ", serviceName=" + serviceName
+				+ ", serviceDescription=" + serviceDescription + ", serviceProvider=" + serviceProvider
+				+ ", serviceSpatial=" + serviceSpatial + ", serviceTemporalCoverage=" + serviceTemporalCoverage
+				+ ", serviceEndpoint=" + serviceEndpoint + ", serviceDocumentation=" + serviceDocumentation
+				+ ", serviceType=" + serviceType + ", endpoint=" + endpoint + ", serviceParameters=" + serviceParameters
+				+ "]";
+	}
 	
 	
 

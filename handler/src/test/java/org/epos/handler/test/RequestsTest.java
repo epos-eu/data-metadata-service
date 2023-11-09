@@ -23,9 +23,9 @@ public class RequestsTest {
 		RequestHandler rh = new RequestHandler(Actor.getInstance(BuiltInActorType.DB_CONNECTOR.verbLabel()).get());
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("epos_operation-type", "get");
-		headers.put("epos_request-type", "test.api.distributed-processing-service.v1.processing.details");
+		//headers.put("epos_request-type", "test.api.distributed-processing-service.v1.processing.details");
 		
-		//headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.search");
+		headers.put("epos_request-type", "demo.k8s-epos-deploy.operational-testing.api.resources-service.v1.resources.monitoring");
 		//headers.put("epos_request-type", "converter-plugins");
 		//headers.put("epos_request-type", "api.external-access-service.v1.execute");
 		//headers.put("epos_request-type", "testing.k8s-epos-deploy.new-environment.api.external-access-service.v1.execute");
@@ -61,7 +61,7 @@ public class RequestsTest {
 		}
 		//System.out.println(FacetsGeneration.generateOnlyFacetsTree(new JsonObject(), null));
 		//rh.handle(payloadResourcesPlugin, ServiceType.PROCESS, headers);
-		System.out.println(rh.handle(payloadDetails, ServiceType.PROCESS, headers));
+		System.out.println(rh.handle(payloadResourcesPlugin, ServiceType.METADATA, headers));
 		//rh.handle(payloadEmptySearch, ServiceType.METADATA, headers);
 	}
 

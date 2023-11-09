@@ -83,7 +83,7 @@ public class DetailsItemGenerationJPA {
 				distributionSelected.getWebserviceByAccessService() : null;
 		if (ws == null && distributionSelected.getAccessService() != null) return new JsonObject();
 
-		EDMOperation op;
+		EDMOperation op = null;
 		if (distributionSelected.getAccessURLByInstanceId() != null) {
 			/*op = getFromDB(em, EDMOperation.class, "operation.findByListOfUidAndState",
 					"LIST", distributionSelected.getAccessURLByInstanceId().stream()
@@ -294,8 +294,9 @@ public class DetailsItemGenerationJPA {
 		distribution.setParameters(new ArrayList<>());
 		// OPERATION AND PARAMETERS
 		if (Objects.nonNull(op)) {
+			System.out.println("TEMPLATE HERE: "+op.getTemplate());
 			distribution.setEndpoint(op.getTemplate());
-			distribution.setServiceEndpoint(op.getTemplate().split("\\{")[0]);
+			if(op.getTemplate()!=null) distribution.setServiceEndpoint(op.getTemplate().split("\\{")[0]);
 			distribution.setOperationid(op.getUid());
 			if (op.getMappingsByInstanceId() != null) {
 				for (EDMMapping mp : op.getMappingsByInstanceId()) {

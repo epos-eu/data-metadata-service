@@ -47,6 +47,9 @@ public class URLGeneration {
 	 */
 	public static String generateURLFromTemplateAndMap(String template, Map<String, Object> map)
 	{
+		
+		System.out.println("URL ---> "+template);
+		System.out.println("MAP ---> "+map);
 
 		boolean isSegment = false;
 		StringBuilder sb = new StringBuilder();
