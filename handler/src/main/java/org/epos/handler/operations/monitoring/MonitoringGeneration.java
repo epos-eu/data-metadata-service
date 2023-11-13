@@ -1,5 +1,6 @@
 package org.epos.handler.operations.monitoring;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,16 +94,27 @@ public class MonitoringGeneration {
 			HashMap<String, Object> parametersMap = new HashMap<>();
 
 			if(distribution!=null) {
-
+				
 				if(distribution.getParameters()!=null) {
 					distribution.getParameters().forEach(p -> {
 						if (p.getValue() != null && !p.getValue().equals(""))
 							parametersMap.put(p.getName(), p.getValue());
-						if (p.getDefaultValue() != null && p.getValue() == null )
+						if (p.getDefaultValue() != null && p.getValue() == null && p.isRequired())
 							parametersMap.put(p.getName(), p.getDefaultValue());
 					});
 				}
-				if(distribution.getEndpoint()!=null) mb.setOriginalURL(URLGeneration.generateURLFromTemplateAndMap(distribution.getEndpoint(), parametersMap));
+				if(distribution.getEndpoint()!=null) {
+					String compiledUrl = null;
+					compiledUrl = URLGeneration.generateURLFromTemplateAndMap(distribution.getEndpoint(), parametersMap);
+					try {
+						compiledUrl = URLGeneration.ogcWFSChecker(compiledUrl);
+					}catch(Exception e) {
+						LOGGER.error("Found the following issue whilst executing the WFS Checker, issue raised "+ e.getMessage() + " - Continuing execution");
+					}
+					
+					compiledUrl = java.net.URLDecoder.decode(compiledUrl, StandardCharsets.UTF_8);
+					mb.setOriginalURL(compiledUrl);
+				}
 
 				//DDSS
 				for(DataProduct d : datasetList) {
@@ -170,7 +182,6 @@ public class MonitoringGeneration {
 
 				mb.setId(dx.getMetaId());
 				mb.setUid(dx.getUid());
-				System.out.println(mb);
 				if(mb.getOriginalURL()!=null)
 					monitoringList.add(mb);
 			}
