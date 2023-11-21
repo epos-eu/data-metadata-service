@@ -101,7 +101,7 @@ public class AvailableFormatsGeneration {
 							}
 						}
 					}
-					if (!isWMS && op.getOperationReturnsByInstanceId() != null && formats.isEmpty()) {
+					if (op.getOperationReturnsByInstanceId() != null && formats.isEmpty()) {
 						for (String returns : op.getOperationReturnsByInstanceId().stream().map(EDMOperationReturns::getReturns).collect(Collectors.toList())) {
 							if (returns.contains("geojson") || returns.contains("geo+json")) {
 								formats.add(new AvailableFormat.AvailableFormatBuilder()
@@ -122,7 +122,7 @@ public class AvailableFormatsGeneration {
 							}
 						}
 					}
-					if (op.getSoftwareapplicationOperationsByInstanceId() != null) {
+					if (!isWMS && op.getSoftwareapplicationOperationsByInstanceId() != null) {
 						for (EDMSoftwareapplication s : op.getSoftwareapplicationOperationsByInstanceId().stream().map(EDMSoftwareapplicationOperation::getSoftwareapplicationByInstanceSoftwareapplicationId).collect(Collectors.toList())) {
 							if (s.getSoftwareapplicationParametersByInstanceId() != null) {
 								ArrayList<Parameter> parameterList = new ArrayList<>();
